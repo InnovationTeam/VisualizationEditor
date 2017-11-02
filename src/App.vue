@@ -1,5 +1,5 @@
 <template>
-	<el-container style="height: 800px;width: 200px; border: 1px solid #eee">
+	<el-container style="height: 800px;width: 250px; border: 1px solid #eee">
 		<!-- 左侧常用功能 -->
 		<left-bar></left-bar>
 		

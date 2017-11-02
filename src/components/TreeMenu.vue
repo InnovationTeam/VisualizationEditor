@@ -11,7 +11,6 @@
                 </template>
             </div>
         </template>
-
         <template v-else>
             <File v-bind="{fileName: name}"/>
         </template>
