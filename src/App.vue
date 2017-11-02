@@ -1,23 +1,29 @@
 <template>
-	<el-container style="height: 800px;width: 250px; border: 1px solid #eee">
-		<!-- 左侧常用功能 -->
-		<left-bar></left-bar>
-		
-		<el-container style="background-color: #3C3C3C">
-			<el-header style="text-align: left; height:30px; font-size: 12px">
-        资源管理器
-			</el-header>
-			
-      <drop-down message="打开的编辑器" container="editContainer"></drop-down>
-			<drop-down message="文件夹" container="documentContainer"></drop-down>
+	<div>
+		<menu-bar></menu-bar>
+		<el-container style="height: 800px;width: 100%; border: 1px solid #eee">
+			<!-- 左侧常用功能 -->
+			<left-bar></left-bar>
+			<el-container style="background-color: #3C3C3C">
+				<el-header style="text-align: left; height:30px; font-size: 12px">
+	        资源管理器
+				</el-header>
+	      <drop-down message="打开的编辑器" container="editContainer"></drop-down>
+				<drop-down message="文件夹" container="documentContainer"></drop-down>
+			</el-container>
+				<el-container>
+			<editor></editor>
 		</el-container>
-	</el-container>
-</template>
+		</el-container>
 
+	
+	</div>
+</template>
 <script>
 import LeftBar from './components/LeftBar'
 import DropDown from './components/DropDown'
-
+import MenuBar from './components/MenuBar'
+import Editor_js from './components/Editor_js'
 
 export default {
   data () {
@@ -27,7 +33,9 @@ export default {
   },
   components: {
 		'left-bar': LeftBar,
-		'drop-down': DropDown
+		'drop-down': DropDown,
+		'menu-bar': MenuBar,
+		'editor': Editor_js
   },
 	methods: {
 		show: function(){
