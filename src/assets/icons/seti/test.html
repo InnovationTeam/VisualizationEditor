@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>test</title>
+    <style>
+        @font-face {
+            font-family: seti;
+            src: url(./seti.woff);
+        }
+
+
+        .icon-im{
+            font-family: seti;
+            font-size: 200%;
+            color: #e37933;
+        }
+
+        .icon-im:before {
+            content: attr(data-content);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="icon-im" data-content="&#xe039;"></div>
+</body>
+
+</html>
