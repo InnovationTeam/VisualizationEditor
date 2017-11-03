@@ -114,7 +114,7 @@ export default {
 
 /* 菜单栏布局css */
 .menu-bar{
-    width: 100%;
+    width: 1100px;
     background-color:#e3e3e4;
     text-align: left;
 
@@ -125,6 +125,7 @@ export default {
 .sub-menu{
     position: relative;
     display: inline;
+    z-index:1000;
 }
 
 .el-button{

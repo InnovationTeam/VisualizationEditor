@@ -1,22 +1,19 @@
 <template>
 	<div>
 		<menu-bar></menu-bar>
-		<el-container style="height: 800px;width: 100%; border: 1px solid #eee">
+		<el-container style="height: 800px;width: 1100px; border: 2px solid #eee">
 			<!-- 左侧常用功能 -->
 			<left-bar></left-bar>
-			<el-container style="background-color: #3C3C3C">
+			<div style="background-color: #3C3C3C;width:150px;">
 				<el-header style="text-align: left; height:30px; font-size: 12px">
 	        资源管理器
 				</el-header>
 	      <drop-down message="打开的编辑器" container="editContainer"></drop-down>
 				<drop-down message="文件夹" container="documentContainer"></drop-down>
-			</el-container>
-				<el-container>
+			</div>
 			<editor></editor>
 		</el-container>
-		</el-container>
 
-	
 	</div>
 </template>
 <script>

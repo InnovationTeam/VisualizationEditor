@@ -1,6 +1,6 @@
 <template>
   <div id="editor_js">
-    <div @contextmenu="showMenu" style="width: 500px;height: 500px;">
+    <div @contextmenu="showMenu" style="width: 900px;height: 500px;">
     <editor :content="variable" :width="'100%'" :ext="'language_tools'" :height="'800px'" :lang="'javascript'" :sync='true' :theme="'eclipse'" :options="options"></editor>
     <vue-context-menu :contextMenuData="contextMenuData"
 	                  @savedata="savedata"
