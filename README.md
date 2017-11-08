@@ -1,4 +1,4 @@
-# my-project
+# visualizationeditor
 
 > An electron-vue project
 
