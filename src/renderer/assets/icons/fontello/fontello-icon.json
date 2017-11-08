@@ -1,0 +1,22 @@
+{
+	"font": {
+		"id": "fontello",
+		"src": {
+			"path": "./fontello.woff",
+			"format": "woff"
+		},
+		"weight": "normal",
+		"style": "normal",
+		"size": "150%"
+	},
+	"iconDefinitions": {
+		"folder": {
+			"fontCharacter": "\uf069",
+			"fontColor": "#d35400"
+		},
+		"folder-open": {
+			"fontCharacter": "\uf068",
+			"fontColor": "#d35400"
+		}
+	}
+}
