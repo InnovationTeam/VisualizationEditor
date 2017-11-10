@@ -1,20 +1,23 @@
 <template>
 	<div>
-		<menu-bar></menu-bar>
-		<el-container style="height: 800px;width: 100%; border: 1px solid #eee">
+		<menu-bar id="menu-bar"></menu-bar>
+		<div class="box">
+
+		</div>
+		<!-- <el-container style="height: 800px;width: 100%; border: 1px solid #eee"> -->
 			<!-- 左侧常用功能 -->
-			<left-bar></left-bar>
-			<el-container style="background-color: #3C3C3C">
-				<el-header style="text-align: left; height:30px; font-size: 12px">
-	        资源管理器
-				</el-header>
-	      <drop-down message="打开的编辑器" container="editContainer"></drop-down>
-				<drop-down message="文件夹" container="documentContainer"></drop-down>
-			</el-container>
-				<el-container>
-			<editor></editor>
-		</el-container>
-		</el-container>
+			<!-- <left-bar></left-bar> -->
+			<!-- <el-container style="background-color: #3C3C3C"> -->
+				<!-- <el-header style="text-align: left; height:30px; font-size: 12px"> -->
+	        <!-- 资源管理器 -->
+				<!-- </el-header> -->
+	      <!-- <drop-down message="打开的编辑器" container="editContainer"></drop-down> -->
+				<!-- <drop-down message="文件夹" container="documentContainer"></drop-down> -->
+			<!-- </el-container> -->
+				<!-- <el-container> -->
+			<!-- <editor></editor> -->
+		<!-- </el-container> -->
+		<!-- </el-container> -->
 
 	
 	</div>
@@ -47,7 +50,24 @@ export default {
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+	#menu-bar {
+        position: absolute;
+        z-index: 2;
+    }
+    
+    .box {
+            position: absolute;
+            left: 0;
+            top: 30px;
+            width: 100%;
+            height: 100%;
+            background: #3f4760;
+            background: -webkit-linear-gradient(top, #3f4760 0%, #1a223f 100%);
+            background: linear-gradient(to bottom, #3f4760 0%, #1a223f 100%);
+            z-index: 0;
+        }
+
 	.el-header {
 		background-color: #2B2B2B;
 		color: #dddddd;
