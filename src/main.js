@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 加载并渲染App
 import App from './App'
 import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 // 在Vue中使用elemrnt-ui
@@ -19,6 +20,7 @@ Vue.use(VueContextMenu)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   template: `<div><App/></div>`,
   components: { App }
 })

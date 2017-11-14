@@ -1,0 +1,160 @@
+/**
+ * @file icon.css
+ */
+
+@font-face {
+    font-family: "WXVEicon";
+    src: url("WXVEicon.woff"); 
+}
+
+
+.icon {
+    font-family: "WXVEicon" !important;
+    display: inline-block;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wechat:before {
+  content: "\e001";
+}
+
+.icon-page:before {
+  content: "\e002";
+}
+
+.icon-html:before {
+  content: "\e003";
+}
+
+.icon-javascript:before {
+  content: "\e004";
+}
+
+.icon-typescript:before {
+  content: "\e005";
+}
+
+.icon-json:before {
+  content: "\e006";
+}
+
+.icon-css:before {
+  content: "\e007";
+}
+
+.icon-default:before {
+  content: "\e008";
+}
+
+.icon-project:before {
+  content: "\e009";
+}
+
+.icon-font:before {
+  content: "\e00a";
+}
+
+.icon-image:before {
+  content: "\e00b";
+}
+
+.icon-svg:before {
+  content: "\e00c";
+}
+
+.icon-newfile:before {
+  content: "\e00d";
+}
+
+.icon-explorer:before {
+  content: "\e00e";
+}
+
+.icon-checkbox_unchecked:before {
+  content: "\e00f";
+}
+
+.icon-checkbox_checked:before {
+  content: "\e010";
+}
+
+.icon-search:before {
+  content: "\e011";
+}
+
+.icon-config:before {
+  content: "\e012";
+}
+
+.icon-setting:before {
+  content: "\e013";
+}
+
+.icon-error:before {
+  content: "\e014";
+}
+
+.icon-star_empty:before {
+  content: "\e015";
+}
+
+.icon-star:before {
+  content: "\e016";
+}
+
+.icon-git:before {
+  content: "\e017";
+}
+
+.icon-github:before {
+  content: "\e018";
+}
+
+.icon-ignore:before {
+  content: "\e019";
+}
+
+.icon-info:before {
+  content: "\e01a";
+}
+
+.icon-lock:before {
+  content: "\e01b";
+}
+
+.icon-markdown:before {
+  content: "\e01c";
+}
+
+.icon-php:before {
+  content: "\e01d";
+}
+
+.icon-shell:before {
+  content: "\e01e";
+}
+
+.icon-minimize:before {
+  content: "\e01f";
+}
+
+.icon-restore_down:before {
+  content: "\e020";
+}
+
+.icon-maximize:before {
+  content: "\e021";
+}
+
+.icon-close:before {
+  content: "\e022";
+}
+
+
+

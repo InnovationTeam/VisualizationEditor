@@ -1,36 +1,37 @@
 <template>
-<div class="menu-bar">
-    <div class="menu-nav" @click="ClickNavIcon">
+<div id="menu-bar">
+    <div id="menu-nav" @click.stop="ClickNavIcon" ref="menuNav">
         <div id="nav-icon" :class="[isOpen ? 'open' : '']">
             <span></span><span></span><span></span>
         </div>
     </div>
 
-    <div id="menu-bar-toggle" @click.self="haveClicked = false; showMenu = ''" @mouseover="isFocus = true" @mouseout="OutMenu">
-        <!-- <transition-group enter-active-class="animated fadeIn" tag="div"> -->
-            <template v-if="!isFocus">
-                <div id="menu-info" key="menu-info">
-                    <slot name="current-file">VisualizationEditor</slot>    
-                </div>    
-            </template>
-            <template v-else>
-                <template v-for="menu in menus">
-                    <div :class="['menu-item', showMenu === menu.title ? 'active' : '']" 
-                    @click="ClickMenuTitle(menu.title)" @mouseover="OverMenuTitle(menu.title)" 
-                    :key="menu.title">
-                        <span>{{ menu.title }}</span>
-                        <template v-if="showMenu === menu.title">
-                            <sub-menu>
-                                <template v-for="item in menu.items">
-                                    <menu-item :key="item">{{ item }}</menu-item>
-                                </template>
-                            </sub-menu>
+    <div id="menu-bar-toggle" @click.self="haveClicked = false; showMenu = ''" @mouseover="OverMenuBar" @mouseout="OutMenu">
+        <transition name="slide-out-up" mode="out-in">
+            <div v-if="!isFocus" id="menu-info" key="menu-info">
+                <slot name="current-file">VisualizationEditor</slot>    
+            </div>   
+        </transition>
+             
+        <div id="menu-bar-buttons">
+            <template v-for="menu in menus">
+                <div :class="['menu-item', showMenu === menu.title ? 'active' : '']" 
+                @click="ClickMenuTitle(menu.title)" @mouseover="OverMenuTitle(menu.title)" 
+                :key="menu.title">
+                    <span>{{ menu.title }}</span>
+                    <sub-menu v-if="showMenu === menu.title">
+                        <template v-for="item in menu.items">
+                            <menu-item :key="item">{{ item }}</menu-item>
                         </template>
-                    </div>
-                </template> 
-                <slot name="buttons"></slot>  
+                    </sub-menu>
+                </div>
             </template>
-        <!-- </transition-group> -->
+
+		    <span class="top-right-buttons close"><icon :iconType="'close'" /></span> 
+		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'restore_down'" /></span>
+		    <span class="top-right-buttons maximize" :style="{display: isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'maximize'" /></span>
+            <span class="top-right-buttons minimize"><icon :iconType="'minimize'" /></span>
+        </div>
     </div>
 </div>
 
@@ -39,6 +40,7 @@
 <script>
 import SubMenu from './SubMenu'
 import MenuItem from './MenuItem'
+import Icon from './Icon'
 import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
 
 export default {
@@ -143,16 +145,22 @@ export default {
 
         return {
             menus: menu_texts,
-            isOpen: false,
             haveClicked: false,
             showMenu: '',
-            isFocus: false
+            isFocus: false,
+            isWindow: false
         }
 
     },
+    computed: {
+        isOpen() {
+            return this.$store.state.showLeftBar
+        }
+    },
     components:{
         'sub-menu': SubMenu,
-        'menu-item': MenuItem
+        'menu-item': MenuItem,
+        'icon': Icon
     },
     methods: {
         ClickMenuTitle(selected) {
@@ -164,19 +172,23 @@ export default {
             if (this.haveClicked)
                 this.showMenu = overed
         },
+        OverMenuBar(){
+            if (!this.isOpen) 
+                this.isFocus = true
+        },
         OutMenu() {
             if (!this.haveClicked)
                 this.isFocus = false
         },
         ClickNavIcon() {
-            this.isOpen = !this.isOpen
             this.haveClicked = false
             this.showMenu = ''
             this.isFocus = false
+            this.$store.commit('toggleLeftBar')
         }
     },
     mounted() {    
-        document.addEventListener('click', (e) => {       
+        document.addEventListener('click', (e) => {    
             if (!this.$el.contains(e.target)) {
                 this.showMenu = ''   
                 this.haveClicked = false
@@ -188,13 +200,11 @@ export default {
 }
 </script>
 
-
-
 <style lang="scss" scoped>
 $menu-bar-height: 30px;
 $menu-item-width: 50px;
 
-.menu-bar {
+#menu-bar {
     width: 100%;
     height: $menu-bar-height;
     user-select: none;
@@ -205,25 +215,13 @@ $menu-item-width: 50px;
         family: 'Consolas';
         size: 14px;
     }
-    color: #9a9db3;
-}    
+    color: #80849a;
 
-.menu-item {
-    height: inherit;
-    width: $menu-item-width;
-    
-    line-height: $menu-bar-height;
-    float: left;
-    cursor: pointer;
-    text-align: center;
+    position: absolute;
+    z-index: 0;
+}   
 
-    &:hover, &.active {
-        background-color: #24293a;
-        color: #9295a9;
-    }
-}
-
-.menu-nav {
+#menu-nav {
     width: $menu-bar-height;
     height: $menu-bar-height;
     float: left;
@@ -231,6 +229,9 @@ $menu-item-width: 50px;
     align-items: center;
     display: flex;
     cursor: pointer;
+
+    position: absolute;
+    z-index: 3;
 
     &:hover {
         background-color: #24293a;
@@ -286,15 +287,74 @@ $nav-icon-span-height: 2px;
     } 
 }
 
-#menu-info {
-    height: inherit;
-    line-height: $menu-bar-height;
-    text-align: center;
-}
-
 #menu-bar-toggle {
     height: inherit;
 }
 
+#menu-info {
+    height: inherit;
+    width: 100%;
+    line-height: $menu-bar-height;
+    text-align: center;
+    background: #292d43;
+    background: -webkit-linear-gradient(left, #292d43 0%,#353e55 60%,#262b41 100%);
+    background: linear-gradient(to right, #292d43 0%,#353e55 60%,#262b41 100%);
+
+    position: absolute;
+    z-index: 2;
+}
+
+#menu-bar-buttons {
+    height: $menu-bar-height;
+    left: $menu-bar-height;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+}
+ 
+.menu-item {
+    height: inherit;
+    width: $menu-item-width;
+    
+    line-height: $menu-bar-height;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover, &.active {
+        background-color: #24293a;
+        color: #9295a9;
+    }
+}
+
+.top-right-buttons {
+    float: right;
+    height: inherit;
+    width: $menu-bar-height;
+    line-height: $menu-bar-height;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    &.close:hover {
+        background-color: #e64d4c;
+        color: #d8d8d8;
+    }
+    &.restore_down:hover,
+    &.maximize:hover {
+        background-color: #1f2433;
+        color: #9295a9;
+    }
+    &.minimize:hover {
+        background-color: #222738;
+        color: #9295a9;
+    }
+}
+
+.slide-out-up-enter-active, .slide-out-up-leave-active {
+  transition: all .25s ease;
+}
+.slide-out-up-enter, .slide-out-up-leave-to {
+  transform: translateY(-$menu-bar-height);
+}
 </style>
 
