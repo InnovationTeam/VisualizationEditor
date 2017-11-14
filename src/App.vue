@@ -4,9 +4,7 @@
 		<menu-bar id="menu-bar">
 			<span slot="current-file">test.css</span>
 		</menu-bar>
-        <left-bar id="left-bar">
-
-        </left-bar>
+        <left-bar id="left-bar" />
 		<!-- <el-container style="height: 800px;width: 100%; border: 1px solid #eee"> -->
 			<!-- 左侧常用功能 -->
 			<!-- <left-bar></left-bar> -->
@@ -22,12 +20,15 @@
 		<!-- </el-container> -->
 		<!-- </el-container> -->
 
-	
+		<status-bar id="status-bar">
+		</status-bar>
 	</div>
 </template>
 <script>
 import MenuBar from './components/MenuBar'
 import LeftBar from './components/LeftBar'
+import StatusBar from './components/StatusBar'
+
 import DropDown from './components/DropDown'
 import Editor_js from './components/Editor_js'
 
@@ -38,9 +39,10 @@ export default {
     }
   },
   components: {
-		'left-bar': LeftBar,
-		'drop-down': DropDown,
 		'menu-bar': MenuBar,
+		'left-bar': LeftBar,
+		'status-bar': StatusBar,
+		'drop-down': DropDown,
 		'editor': Editor_js
   },
 	methods: {
@@ -55,6 +57,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 $menu-bar-height: 30px;
+$status-bar-height: 25px;
 
 #menu-bar {
     position: absolute;
@@ -66,6 +69,12 @@ $menu-bar-height: 30px;
     z-index: 2;
     top: $menu-bar-height;
     bottom: 0;
+}
+
+#status-bar {
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
 }
 
 .background {

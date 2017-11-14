@@ -10,7 +10,7 @@
 
 .icon {
     font-family: "WXVEicon" !important;
-    display: inline-block;
+    height: inherit;
     font-size: inherit;
     font-style: normal;
     font-weight: normal;

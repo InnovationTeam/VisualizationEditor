@@ -209,8 +209,8 @@ $menu-item-width: 50px;
     height: $menu-bar-height;
     user-select: none;
     background: #292d43;
-    background: -webkit-linear-gradient(left, #292d43 0%,#353e55 60%,#262b41 100%);
-    background: linear-gradient(to right, #292d43 0%,#353e55 60%,#262b41 100%);
+    background: -webkit-linear-gradient(left, #292d43 0%,#2d364e 50%,#262b41 100%);
+    background: linear-gradient(to right, #292d43 0%,#2d364e 50%,#262b41 100%);
     font: {
         family: 'Consolas';
         size: 14px;
@@ -297,8 +297,8 @@ $nav-icon-span-height: 2px;
     line-height: $menu-bar-height;
     text-align: center;
     background: #292d43;
-    background: -webkit-linear-gradient(left, #292d43 0%,#353e55 60%,#262b41 100%);
-    background: linear-gradient(to right, #292d43 0%,#353e55 60%,#262b41 100%);
+    background: -webkit-linear-gradient(left, #292d43 0%,#2d364e 50%,#262b41 100%);
+    background: linear-gradient(to right, #292d43 0%,#2d364e 50%,#262b41 100%);
 
     position: absolute;
     z-index: 2;

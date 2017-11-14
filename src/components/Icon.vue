@@ -1,5 +1,5 @@
 <template>
-    <div :class="['icon', 'icon-' + iconType]"></div>
+    <span :class="['icon', 'icon-' + iconType]"></span>
 </template>
 
 <script>
