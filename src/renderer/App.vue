@@ -2,7 +2,7 @@
   <div >
 
     <div>
-      <!-- <menu-bar></menu-bar> -->
+      <menu-bar></menu-bar>
       <el-container style="height: 800px;width: 1100px; border: 2px solid #eee">
         <!-- 左侧常用功能 -->
         <left-bar></left-bar>
