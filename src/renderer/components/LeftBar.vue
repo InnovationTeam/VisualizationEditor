@@ -18,6 +18,7 @@
     import '../assets/icons/iconfont.css'
 
     var file = require('../../api/file.js');
+    var window = require('../../api/electron_api.js');
 
     export default {
         name: 'left-bar',
@@ -28,10 +29,10 @@
         },
         methods:{
             method1: function(){  
-                file.openFile()
+                file.openFile();
             },
             method2: function(){  
-                alert("Icon2");
+                window.createNewWindow();
             },
             method3: function(){
                 alert("Icon3");
