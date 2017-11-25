@@ -12,9 +12,12 @@
 </template>
 
 
+
 <script>
     // 导入字体样式
     import '../assets/icons/iconfont.css'
+
+    var file = require('../../api/file.js');
 
     export default {
         name: 'left-bar',
@@ -24,10 +27,10 @@
             }
         },
         methods:{
-            method1: function(){
-                alert("Icon1");
+            method1: function(){  
+                file.openFile()
             },
-            method2: function(){
+            method2: function(){  
                 alert("Icon2");
             },
             method3: function(){
