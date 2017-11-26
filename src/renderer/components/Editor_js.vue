@@ -2,8 +2,9 @@
   <div id="editor_js">
 
     <div @contextmenu="showMenu" style="width: 900px;height: 500px;">
-    <editor :content="variable" :width="'100%'" :ext="'language_tools'" :height="'800px'" :lang="'javascript'" :sync='true' :theme="'monokai'" :options="options"></editor>
-
+    <editor ref="editor1" :content="variable" :width="'100%'" :ext="'language_tools'" :height="'800px'" :lang="'javascript'" :sync='true' :theme="'monokai'" :options="options"></editor>
+    <button @click="load">openfile</button>
+    <button @click="save">savefile</button>
     <vue-context-menu :contextMenuData="contextMenuData"
 	                  @savedata="savedata"
 	                  @newdata="testACE">
@@ -17,16 +18,17 @@ import 'brace/mode/javascript'
 import 'brace/theme/eclipse'
 
 import 'brace/theme/monokai'
+import {loadFile2} from '../../API/File/openFile.js'
+import {saveFile} from '../../API/File/saveFile.js'
 export default {
-  components: {
-    editor
-  },
+  
    data () {
       return {
          variable:'',
-      options: {
-      fontSize: '15pt'
-     },
+         filePath:"",
+         options: {
+         fontSize: '15pt'
+         },
         msg :'Test Ace-Menu',
       	// contextmenu data (菜单数据)
         contextMenuData: {
@@ -38,7 +40,7 @@ export default {
             y: null
           },
         // Menu options (菜单选项)
-          menulists: [
+          menulists:[
             {
               fnHandler: 'savedata', // Binding events(绑定事件)
               icoName: 'fa fa-home fa-fw', // icon (icon图标 )
@@ -83,7 +85,19 @@ export default {
         }
       }
     },
+    components: {
+        editor
+    },
     methods: {
+      load:function(){
+        var result=loadFile2();
+        this.variable=result.content;
+        this.filePath=result.path;
+
+      },
+      save:function(){
+        saveFile(this);
+      },
       testACE (str) {
         //  console.log(str)
       },

@@ -9,7 +9,7 @@
                 <a href="#">新建项目 Alt+Shift+P</a>
                 <a href="#">新建文件 Ctrl+N</a>
                 <a href="#">新建窗口 Ctrl+Shift+N</a>
-                <a href="#">打开文件 Ctrl+O</a>
+                <a href="javascript::void(0)" onclick="openfile()">打开文件 Ctrl+O</a>
                 <a href="#">打开文件夹 </a>
                 <a href="#">打开最近的文件    ▸</a>
                 <a href="#">保存</a>
@@ -104,6 +104,12 @@
 
 <script>
 export default {
+    data(){
+
+    },
+    methods:{
+
+    }
 
 }
 </script>

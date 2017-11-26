@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "visualizationeditor",
   "version": "0.0.0",
   "author": "Sun668 <947692259@qq.com>",
   "description": "An electron-vue project",
@@ -20,7 +20,7 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "my-project",
+    "productName": "visualizationeditor",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
