@@ -1,6 +1,6 @@
 <template>
     <transition name="slide-in-left">
-        <div id="left-bar" v-if="show">
+        <div id="side-bar" v-if="show">
             <template v-for="entry in entries">
                 <div :key="entry.itemText" class="entry">
                     <input type="radio" name="entry" style="display: none" />
@@ -67,14 +67,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$left-bar-width: 270px;
-#left-bar {
-    background: rgba(54, 61, 82, 0.95);
-    background: -webkit-linear-gradient(top, rgba(54, 61, 82, 0.95) 0%,rgba(23, 29, 53, 0.95) 100%);
-    background: linear-gradient(to bottom, rgba(54, 61, 82, 0.95) 0%, rgba(23, 29, 53, 0.95) 100%);
+$side-bar-width: 270px;
+#side-bar {
+    background: rgba(54, 61, 82, 0.9);
+    background: -webkit-linear-gradient(top, rgba(54, 61, 82, 0.9) 0%,rgba(23, 29, 53, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(54, 61, 82, 0.9) 0%, rgba(23, 29, 53, 0.9) 100%);
     box-shadow: 4px 0px 9px -1px rgba(20, 20, 20, 0.6);
     text-align: center;
-    width: $left-bar-width;
+    width: $side-bar-width;
     font: {
         family: 'Consolas';
         size: 14px;
@@ -120,6 +120,6 @@ $entry-height: 70px;
 }
 .slide-in-left-enter, .slide-in-left-leave-to
 /* .slide-in-left-leave-active for below version 2.1.8 */ {
-  transform: translateX(-$left-bar-width);
+  transform: translateX(-$side-bar-width);
 }
 </style>

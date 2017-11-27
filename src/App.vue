@@ -1,13 +1,19 @@
 <template>
 	<div>
 		<div class="background"></div>
+		<left-panel id="left-panel">
+
+		</left-panel>
+
 		<menu-bar id="menu-bar">
 			<span slot="current-file">test.css</span>
 		</menu-bar>
-        <left-bar id="left-bar" />
+        <side-bar id="side-bar" />
+		<status-bar id="status-bar" />
+		
 		<!-- <el-container style="height: 800px;width: 100%; border: 1px solid #eee"> -->
 			<!-- 左侧常用功能 -->
-			<!-- <left-bar></left-bar> -->
+			<!-- <side-bar></side-bar> -->
 			<!-- <el-container style="background-color: #3C3C3C"> -->
 				<!-- <el-header style="text-align: left; height:30px; font-size: 12px"> -->
 	        <!-- 资源管理器 -->
@@ -20,14 +26,15 @@
 		<!-- </el-container> -->
 		<!-- </el-container> -->
 
-		<status-bar id="status-bar">
-		</status-bar>
+		
 	</div>
 </template>
 <script>
 import MenuBar from './components/MenuBar'
-import LeftBar from './components/LeftBar'
+import SideBar from './components/SideBar'
 import StatusBar from './components/StatusBar'
+
+import LeftPanel from './components/LeftPanel'
 
 import DropDown from './components/DropDown'
 import Editor_js from './components/Editor_js'
@@ -40,8 +47,9 @@ export default {
   },
   components: {
 		'menu-bar': MenuBar,
-		'left-bar': LeftBar,
+		'side-bar': SideBar,
 		'status-bar': StatusBar,
+		'left-panel': LeftPanel,
 		'drop-down': DropDown,
 		'editor': Editor_js
   },
@@ -64,7 +72,7 @@ $status-bar-height: 25px;
     z-index: 3;
 }
 
-#left-bar {
+#side-bar {
 	position: absolute;
     z-index: 2;
     top: $menu-bar-height;
@@ -77,6 +85,13 @@ $status-bar-height: 25px;
 	bottom: 0;
 }
 
+#left-panel {
+	position: absolute;
+	z-index: 0;
+	top: $menu-bar-height + 1px;
+	bottom: $status-bar-height + 1px;
+}
+
 .background {
     position: absolute;
     left: 0;
@@ -85,7 +100,7 @@ $status-bar-height: 25px;
     background: #3f4760;
     background: -webkit-linear-gradient(top, #3f4760 0%, #1a223f 100%);
     background: linear-gradient(to bottom, #3f4760 0%, #1a223f 100%);
-    z-index: 0;
+    z-index: -1;
     font-size: 5em;
 }
 
