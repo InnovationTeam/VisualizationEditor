@@ -1,14 +1,16 @@
 <template>
 	<div>
-		<div class="background"></div>
-		<left-panel id="left-panel">
-
-		</left-panel>
-
 		<menu-bar id="menu-bar">
 			<span slot="current-file">test.css</span>
 		</menu-bar>
+
         <side-bar id="side-bar" />
+		<left-panel id="left-panel" ref="leftPanel" :style="{width: leftPanelWidth + 'px'}">
+		</left-panel>
+		<div class="col-resize" @mousedown="resizePanel_left_editor($event)" 
+			:style="{left: resizeLeft + 'px', width: resizeWidth + 'px'}"></div>
+		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}"></div>
+
 		<status-bar id="status-bar" />
 		
 		<!-- <el-container style="height: 800px;width: 100%; border: 1px solid #eee"> -->
@@ -40,22 +42,56 @@ import DropDown from './components/DropDown'
 import Editor_js from './components/Editor_js'
 
 export default {
-  data () {
-    return {
-		active: false
-    }
-  },
-  components: {
+	data () {
+		return {
+			leftPanelWidth: 300,
+			resizeWidth: 10
+    	}
+	},
+	computed:{
+		resizeLeft(){
+			return this.leftPanelWidth - this.resizeWidth / 2
+		},
+		editorPanelLeft(){
+			return this.leftPanelWidth
+		}
+	},
+  	components: {
 		'menu-bar': MenuBar,
 		'side-bar': SideBar,
 		'status-bar': StatusBar,
 		'left-panel': LeftPanel,
 		'drop-down': DropDown,
 		'editor': Editor_js
-  },
+  	},
 	methods: {
-		show: function(){
-			active = !active;
+		resizePanel_left_editor(event){
+			if(event.button === 0){
+				let startX = event.clientX
+				let minWidth = 200
+				let maxWidth = window.innerWidth - minWidth
+
+				document.onmousemove = (event) => {
+					event.preventDefault()
+					if(event.clientX >= minWidth && event.clientX <= maxWidth){
+						let moveX = event.clientX - startX
+						startX = event.clientX
+
+						let temp = this.leftPanelWidth + moveX
+						this.leftPanelWidth = temp < minWidth ? minWidth : (temp > maxWidth ? maxWidth : temp)
+					} else if(event.clientX < minWidth) {
+						this.leftPanelWidth = minWidth
+					} else {
+						this.leftPanelWidth = maxWidth
+					}
+					
+				}
+
+				document.onmouseup = () => {
+					document.onmousemove = null
+				}
+			}
+			
 		}
 	}
 }
@@ -87,21 +123,31 @@ $status-bar-height: 25px;
 
 #left-panel {
 	position: absolute;
-	z-index: 0;
-	top: $menu-bar-height + 1px;
-	bottom: $status-bar-height + 1px;
+	z-index: -2;
+	top: $menu-bar-height;
+	bottom: $status-bar-height;
 }
 
-.background {
+#editor-panel {
     position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
+	right: 0;
+	top: $menu-bar-height;
+	bottom: $status-bar-height;
     background: #3f4760;
     background: -webkit-linear-gradient(top, #3f4760 0%, #1a223f 100%);
     background: linear-gradient(to bottom, #3f4760 0%, #1a223f 100%);
-    z-index: -1;
+    z-index: -2;
     font-size: 5em;
+}
+
+.col-resize {
+	background-color: rgba(0,0,0,0);
+	display: block;
+	cursor: col-resize;
+	position: absolute;
+	top: $menu-bar-height;
+	bottom: $status-bar-height;
+    z-index: -1;
 }
 
 // 	.el-header {
