@@ -2,9 +2,9 @@
 dist/electron/*
 dist/web/*
 build/*
+package-lock.json
 !build/icons
-coverage
-node_modules/
+node_modules/*
 npm-debug.log
 npm-debug.log.*
 thumbs.db

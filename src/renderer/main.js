@@ -1,29 +1,21 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import axios from 'axios'
+// 引入element-ui
 
+// css样式需要单独引入
+// 加载并渲染App
 import App from './App'
 import router from './router'
 import store from './store'
 
-
-import ElementUI from 'element-ui'
-import VueContextMenu from 'vue-contextmenu'
-
-// css样式需要单独引入
-import 'element-ui/lib/theme-chalk/index.css'
-
-
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
-
-Vue.use(ElementUI)
-Vue.use(VueContextMenu)
+// 在Vue中使用elemrnt-ui
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
-  router,
+  el: '#app',
   store,
-  template: '<App/>'
-}).$mount('#app')
+  template: `<div><App/></div>`,
+  components: { App }
+})

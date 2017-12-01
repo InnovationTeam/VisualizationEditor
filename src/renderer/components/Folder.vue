@@ -1,6 +1,6 @@
 <template>
     <div @click="toggle">
-        <span class="folderIcon" :style="iconStyle">{{ iconType }}</span>
+        <span class="folderIcon"><icon :iconType="iconType" /></span>
 
         <span class="folderName">
             <template v-if="!changing">
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import folderIconInfo from '../assets/icons/fontello/fontello-icon.json'
+import Icon from './Icon'
 
 export default {
     props: {
@@ -40,25 +40,15 @@ export default {
         }
     },
     computed:{
-		icon() {
-			let type = this.opened ? 'folder-open' : 'folder'
-			return folderIconInfo['iconDefinitions'][type]
-		},
 		iconType() {
-			return this.icon['fontCharacter']
-		},
-		iconStyle() {
-			return {
-				'color': this.icon['fontColor']
-			}
+			return 'folder_' + (this.opened ? 'open' : 'close')
 		}
     },
     directives: {
         focus: {
-            inserted(el, {value}) {
+            inserted(el) {
                 el.focus()
-                let index = value.lastIndexOf('.')
-                el.setSelectionRange(0, index > 0 ? index : -1)
+                el.setSelectionRange(0, -1)
             }
         },
         enter: {
@@ -68,6 +58,9 @@ export default {
                 }
             }
         }
+    },
+    components: {
+        'icon': Icon
     }
 }
 </script>
@@ -75,12 +68,6 @@ export default {
 <style lang="scss" scoped>
 $basic-font-size: 20px;
 $basic-height: 21px;
-$folderIcon-font-family: fontello;
-
-@font-face {
-	font-family: $folderIcon-font-family;
-	src: url('../assets/icons/fontello/fontello.woff');
-}
 
 div {
     color: white;
@@ -94,12 +81,7 @@ div {
 }
 
 span.folderIcon {
-	font: {
-		family: $folderIcon-font-family;
-		size: 0.7em;
-    }
-    width: $basic-font-size * 1.2;
-    text-align: center;
+    margin-right: 3px;
 }
 
 $font-color: #c5c5c5;

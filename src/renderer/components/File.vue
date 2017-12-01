@@ -1,34 +1,37 @@
 <template>
     <div>
-        <span class="fileIcon" :style="iconStyle">{{ iconType }}</span>
+        <span class="fileIcon"><icon :iconType="iconType" /></span>
 
         <span class="fileName">
             <template v-if="!changing">
-                <span @dblclick="changeName">{{ fileName }}</span>
+                <span @click.right="changeName">{{ fileName }}</span>
             </template>
             <template v-else>
                 <input @keyup.enter="notChange" @blur="notChange" v-focus="fileName" v-enter="!changing" v-model="fileName" spellcheck="false">
             </template>
         </span>
-
-        <!-- <span class="directory">
-            <template v-if="opened">
-            </template>
-        </span> -->
     </div>
 </template>
 
 <script>
-import fileIconInfo from '../assets/icons/seti/seti-icon.json'
+import Icon from './Icon'
 
 export default {
     props: {
         fileName: String
     },
     data() {
+        let availableExtension = {
+            'js': 'javascript',
+            'wxs': 'javascript',
+            'wxss': 'css',
+            'json': 'json',
+            'wxml': 'html'
+        }
         return {
             dir: 'src/test',
-            changing: false
+            changing: false,
+            availableExtension: availableExtension
         }
     },
     methods: {
@@ -46,20 +49,12 @@ export default {
             let index = this.fileName.lastIndexOf('.')
             return index > 0 ? this.fileName.substring(index + 1).toLowerCase() : ''
         },
-		icon() {
-			let IDs = fileIconInfo['extensions']
-			return IDs[this.extension] !== undefined ? fileIconInfo['iconDefinitions'][IDs[this.extension]] : fileIconInfo['iconDefinitions'][IDs['file']]
-		},
 		iconType() {
-			return this.icon['fontCharacter']
-		},
-		iconStyle() {
-			return {
-				'color': this.icon['fontColor']
-			}
+            let type = this.availableExtension[this.extension]
+            return type !== undefined ? type : 'default'
 		}
     },
-     directives: {
+    directives: {
         focus: {
             inserted(el, {value}) {
                 el.focus()
@@ -74,6 +69,9 @@ export default {
                 }
             }
         }
+    },
+    components: {
+        'icon': Icon
     }
 }
 </script>
@@ -81,12 +79,6 @@ export default {
 <style lang="scss" scoped>
 $basic-font-size: 20px;
 $basic-height: 21px;
-$fileIcon-font-family: seti;
-
-@font-face {
-	font-family: $fileIcon-font-family;
-	src: url('../assets/icons/seti/seti.woff');
-}
 
 div {
     color: white;
@@ -100,12 +92,7 @@ div {
 }
 
 span.fileIcon {
-	font: {
-		family: $fileIcon-font-family;
-		size: 1em;
-    }
-    width: $basic-font-size * 1.2;
-    text-align: center;
+	margin-right: 3px;
 }
 
 $font-color: #c5c5c5;
@@ -125,7 +112,7 @@ input {
     outline: none;
     border-radius: 3px;
     font: {
-        family: "Microsoft YaHei";
+        family: 'Microsoft YaHei';
     }
     padding: {
         left: 2px;

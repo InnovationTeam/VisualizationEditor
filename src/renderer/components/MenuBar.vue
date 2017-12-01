@@ -1,195 +1,360 @@
-
 <template>
+<div id="menu-bar">
+    <div id="menu-nav" @click.stop="ClickNavIcon" ref="menuNav">
+        <div id="nav-icon" :class="[isOpen ? 'open' : '']">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
 
-<div class="menu-bar">
-    <el-button-group>
-        <div class="sub-menu">
-            <el-button size="mini">文件(F)</el-button>
-            <div class="dropdown-content">
-                <a href="#">新建项目 Alt+Shift+P</a>
-                <a href="#">新建文件 Ctrl+N</a>
-                <a href="#">新建窗口 Ctrl+Shift+N</a>
-                <a href="javascript::void(0)" onclick="openfile()">打开文件 Ctrl+O</a>
-                <a href="#">打开文件夹 </a>
-                <a href="#">打开最近的文件    ▸</a>
-                <a href="#">保存</a>
-                <a href="#">另存为</a>
-                <a href="#">全部保存</a>
-                <a href="#">自动保存</a>
-                <a href="#">首选项    ▸</a>
-                <a href="#">关闭编辑器</a>
-                <a href="#">关闭文件夹</a>
-                <a href="#">关闭窗口</a>
-                <a href="#">重新加载</a>
-                <a href="#">退出</a>
-            </div>
+    <div id="menu-bar-toggle" @click.self="haveClicked = false; showMenu = ''" @mouseover="OverMenuBar" @mouseout="OutMenu">
+        <transition name="slide-out-up" mode="out-in">
+            <div v-if="!isFocus" id="menu-info" key="menu-info">
+                <slot name="current-file">VisualizationEditor</slot>    
+            </div>   
+        </transition>
+             
+        <div id="menu-bar-buttons">
+            <template v-for="menu in menus">
+                <div :class="['menu-item', showMenu === menu.title ? 'active' : '']" 
+                @click="ClickMenuTitle(menu.title)" @mouseover="OverMenuTitle(menu.title)" 
+                :key="menu.title">
+                    <span>{{ menu.title }}</span>
+                    <sub-menu v-if="showMenu === menu.title">
+                        <template v-for="item in menu.items">
+                            <menu-item :key="item">{{ item }}</menu-item>
+                        </template>
+                    </sub-menu>
+                </div>
+            </template>
+
+		    <span class="top-right-buttons close"><icon :iconType="'close'" /></span> 
+		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'restore_down'" /></span>
+		    <span class="top-right-buttons maximize" :style="{display: isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'maximize'" /></span>
+            <span class="top-right-buttons minimize"><icon :iconType="'minimize'" /></span>
         </div>
-        <div class="sub-menu">
-            <el-button size="mini">编辑(E)</el-button>
-            <div class="dropdown-content" style="left:-353px;"> 
-                <a href="#">撤销 Ctrl+Z</a>
-                <a href="#">恢复 Ctrl+Y</a>
-                <a href="#">剪切 Ctrl+X</a>
-                <a href="#">粘贴 Ctrl+C</a>
-                <a href="#">查找 CtrK+F</a>
-                <a href="#">替换 Ctrl+R</a>
-                <a href="#">在文件中查找 Ctrl+Shift+F</a>
-                <a href="#">切换行注释 Ctrl+/</a>
-                <a href="#">切换块注释 Alt+Shift+A</a>
-            </div>
-        </div>
-        <div class="sub-menu">
-            <el-button size="mini">选择(S)</el-button>
-            <div class="dropdown-content" style="left:-283px;">
-                <a href="#">全选 Ctrl+A</a>
-                <a href="#">向上复制一行 Alt+Shift+Up Arrow</a>
-                <a href="#">向下复制一行 Alt+Shift+Down Arrow</a>
-                <a href="#">向上移动一行 Alt+Up Arrow</a>
-                <a href="#">向下移动一行 Alt+Down Arrow</a>
-                <a href="#">在上面添加游标 Alt+Ctrl+Up Arrow</a>
-                <a href="#">在下面添加游标 Alt+Ctrl+Down Arrow</a>
-                <a href="#">在行尾添加游标 Alt+Shift+I</a>
-                <a href="#">添加下一个匹配项 Ctrl+D</a>
-                <a href="#">添加上一个匹配项</a>
-                <a href="#">选择所有匹配项 Ctrl+Shift+L</a>
-            </div>
-        </div>
-        <div class="sub-menu">
-            <el-button size="mini">查看(V)</el-button>
-            <div class="dropdown-content" style="left:-213px;">
-                <a href="#">资源管理器 Ctrl+Shift+E</a>
-                <a href="#">搜索 Ctrl+Shift+F</a>
-                <a href="#">问题 Ctrl+Shift+M</a>
-                <a href="#">切换全屏 F11</a>
-                <a href="#">切换Zen模式</a>
-                <a href="#">拆分编辑器 Ctrl+\</a>
-                <a href="#">切换编辑器组布局 Alt+Shift+1</a>
-                <a href="#">切换工具栏 Ctrl +T</a>
-                <a href="#">切换侧边栏 Ctrl+B</a>
-                <a href="#">切换面板 Ctrl+J</a>
-                <a href="#">隐藏状态栏</a>
-                <a href="#">切换右边栏 Ctrl+L</a>
-                <a href="#">切换呈现空格</a>
-                <a href="#">放大 Ctrl+=</a>
-                <a href="#">缩小 Ctrl+-</a>
-                <a href="#">重置缩放</a>
-            </div>
-        </div>
-        <div class="sub-menu">
-            <el-button size="mini">转到(G)</el-button>
-            <div class="dropdown-content" style="left:-143px;">
-                <a href="#">返回 Alt+Left Arrow</a>
-                <a href="#">前进 Alt+Right Arrow</a>
-                <a href="#">转到文件... Ctrl+PS</a>
-                <a href="#">转到定义... F12</a>
-            </div>
-        </div>
-        <div class="sub-menu">
-            <el-button size="mini">帮助(H)</el-button>
-            <div class="dropdown-content" style="left:-72px;">
-                <a href="#">发行说明</a>
-                <a href="#">查看许可证 </a>
-                <a href="#">用户反馈</a>
-                <a href="#">欢迎页</a>
-                <a href="#">检查更新</a>
-                <a href="#">关于</a>
-            </div>
-        </div>
-    </el-button-group>
+    </div>
 </div>
 
 </template>
 
-
-
 <script>
+import SubMenu from './SubMenu'
+import MenuItem from './MenuItem'
+import Icon from './Icon'
+import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
+
 export default {
     data(){
+        let menu_texts = []
+        let menu_item = {
+            title: '',
+            items: []
+        }
+
+        let index = 'MENU_FILE'
+        menu_item.title = MENU_TEXT[index]
+        menu_item.items.push(MENU_TEXT[index + '_NEW_PROJECT'])
+        menu_item.items.push(MENU_TEXT[index + '_NEW_FILE'])
+        menu_item.items.push(MENU_TEXT[index + '_NEW_WINDOW'])
+        menu_item.items.push(MENU_TEXT[index + '_OPEN_FILE'])
+        menu_item.items.push(MENU_TEXT[index + '_OPEN_FOLDER'])
+        menu_item.items.push(MENU_TEXT[index + '_OPEN_RECENT'])
+        menu_item.items.push(MENU_TEXT[index + '_SAVE'])
+        menu_item.items.push(MENU_TEXT[index + '_SAVE_AS'])
+        menu_item.items.push(MENU_TEXT[index + '_SAVE_ALL'])
+        menu_item.items.push(MENU_TEXT[index + '_AUTO_SAVE'])
+        menu_item.items.push(MENU_TEXT[index + '_OPTION'])
+        menu_item.items.push(MENU_TEXT[index + '_CLOSE_EDITOR'])
+        menu_item.items.push(MENU_TEXT[index + '_CLOSE_FOLDER'])
+        menu_item.items.push(MENU_TEXT[index + '_CLOSE_WINDOW'])
+        menu_item.items.push(MENU_TEXT[index + '_RELOAD'])
+        menu_item.items.push(MENU_TEXT[index + '_EXIT'])
+        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+
+        menu_item.items = []
+        index = 'MENU_EDIT'
+        menu_item.title = MENU_TEXT[index]
+        menu_item.items.push(MENU_TEXT[index + '_UNDO'])
+        menu_item.items.push(MENU_TEXT[index + '_REDO'])
+        menu_item.items.push(MENU_TEXT[index + '_CUT'])
+        menu_item.items.push(MENU_TEXT[index + '_COPY'])
+        menu_item.items.push(MENU_TEXT[index + '_PASTE'])
+        menu_item.items.push(MENU_TEXT[index + '_FIND'])
+        menu_item.items.push(MENU_TEXT[index + '_REPLACE'])
+        menu_item.items.push(MENU_TEXT[index + '_FIND_IN_FILES'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_LINE_COMMENT'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_BLOCK_COMMENT'])
+        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+
+        menu_item.items = []
+        index = 'MENU_SELECT'
+        menu_item.title = MENU_TEXT[index]
+        menu_item.items.push(MENU_TEXT[index + '_SELECT_ALL'])
+        menu_item.items.push(MENU_TEXT[index + '_COPY_PREV_LINE'])
+        menu_item.items.push(MENU_TEXT[index + '_COPY_NEXT_LINE'])
+        menu_item.items.push(MENU_TEXT[index + '_MOVE_PREV_LINE'])
+        menu_item.items.push(MENU_TEXT[index + '_MOVE_NEXT_LINE'])
+        menu_item.items.push(MENU_TEXT[index + '_ADD_CURSOR_ABOVE'])
+        menu_item.items.push(MENU_TEXT[index + '_ADD_CURSOR_BELOW'])
+        menu_item.items.push(MENU_TEXT[index + '_ADD_CURSOR_EACH_LINE_END'])
+        menu_item.items.push(MENU_TEXT[index + '_ADD_SELECTION_TO_NEXT_FIND_MATCH'])
+        menu_item.items.push(MENU_TEXT[index + '_ADD_SELECTION_TO_LAST_FIND_MATCH'])
+        menu_item.items.push(MENU_TEXT[index + '_ADD_SELECTION_TO_ALL_FIND_MATCH'])
+        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+
+        menu_item.items = []
+        index = 'MENU_VIEW'
+        menu_item.title = MENU_TEXT[index]
+        menu_item.items.push(MENU_TEXT[index + '_VIEWEXPLORER'])
+        menu_item.items.push(MENU_TEXT[index + '_SEARCH'])
+        menu_item.items.push(MENU_TEXT[index + '_PROBLEM'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_FULL_SCREEN'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_ZEN_MODE'])
+        menu_item.items.push(MENU_TEXT[index + '_SPLIT_EDITOR'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_EDITOR_LAYOUT'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_MENU_BAR'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_SIDE_BAR'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_PANEL'])
+        menu_item.items.push(MENU_TEXT[index + '_HIDE_STATUS_BAR'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_RIGHT_SIDE_BAR'])
+        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_RENDER_WHITE_SPACE'])
+        menu_item.items.push(MENU_TEXT[index + '_ZOOM_IN'])
+        menu_item.items.push(MENU_TEXT[index + '_ZOOM_OUT'])
+        menu_item.items.push(MENU_TEXT[index + '_ZOOM_RESET'])
+        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+
+        menu_item.items = []
+        index = 'MENU_GOTO'
+        menu_item.title = MENU_TEXT[index]
+        menu_item.items.push(MENU_TEXT[index + '_BACK'])
+        menu_item.items.push(MENU_TEXT[index + '_FORWARD'])
+        menu_item.items.push(MENU_TEXT[index + '_GOTO_FILE'])
+        menu_item.items.push(MENU_TEXT[index + '_GOTO_DEFINITION'])
+        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        
+        menu_item.items = []
+        index = 'MENU_HELP'
+        menu_item.title = MENU_TEXT[index]
+        menu_item.items.push(MENU_TEXT[index + '_RELEASE_NOTES'])
+        menu_item.items.push(MENU_TEXT[index + '_LICENSE'])
+        menu_item.items.push(MENU_TEXT[index + '_REPORT'])
+        menu_item.items.push(MENU_TEXT[index + '_WELCOME'])
+        menu_item.items.push(MENU_TEXT[index + '_CHECK_UPDATE'])
+        menu_item.items.push(MENU_TEXT[index + '_ABOUT'])
+        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+
+        return {
+            menus: menu_texts,
+            haveClicked: false,
+            showMenu: '',
+            isFocus: false,
+            isWindow: false
+        }
 
     },
-    methods:{
-
+    computed: {
+        isOpen() {
+            return this.$store.state.showLeftBar
+        }
+    },
+    components:{
+        'sub-menu': SubMenu,
+        'menu-item': MenuItem,
+        'icon': Icon
+    },
+    methods: {
+        ClickMenuTitle(selected) {
+            if (!this.haveClicked)
+                this.haveClicked = true
+            this.showMenu = selected
+        },
+        OverMenuTitle(overed) {
+            if (this.haveClicked)
+                this.showMenu = overed
+        },
+        OverMenuBar(){
+            if (!this.isOpen) 
+                this.isFocus = true
+        },
+        OutMenu() {
+            if (!this.haveClicked)
+                this.isFocus = false
+        },
+        ClickNavIcon() {
+            this.haveClicked = false
+            this.showMenu = ''
+            this.isFocus = false
+            this.$store.commit('toggleLeftBar')
+        }
+    },
+    mounted() {    
+        document.addEventListener('click', (e) => {    
+            if (!this.$el.contains(e.target)) {
+                this.showMenu = ''   
+                this.haveClicked = false
+                this.isFocus = false
+            }
+        })  
     }
 
 }
 </script>
 
+<style lang="scss" scoped>
+$menu-bar-height: 30px;
+$menu-item-width: 50px;
 
+#menu-bar {
+    width: 100%;
+    height: $menu-bar-height;
+    user-select: none;
+    background: #292d43;
+    background: -webkit-linear-gradient(left, #292d43 0%,#2d364e 50%,#262b41 100%);
+    background: linear-gradient(to right, #292d43 0%,#2d364e 50%,#262b41 100%);
+    font: {
+        family: 'Consolas';
+        size: 14px;
+    }
+    color: #80849a;
 
-<style>
-
-/* 菜单栏布局css */
-.menu-bar{
-    width: 1100px;
-    background-color:#e3e3e4;
-    text-align: left;
-
-}
-
-
-/* 菜单栏按钮css */
-.sub-menu{
-    position: relative;
-    display: inline;
-    z-index:1000;
-}
-
-.el-button{
-    border: 0px;
-    background-color:#e3e3e4;
-    color: black;
-}
-
-
-
-.el-button:hover{
-    background-color: #e3e3e4;
-    color: black;
- }
-
- /* .el-button:active{
-    background-color: #b6b0b0;
-    color: black;
- } */
-
- .el-button:focus{
-    background-color: #b6b0b0;
-    color: black;
- }
-
-
-/* 子菜单布局和内容css */
-.dropdown-content {
-    display: none;
     position: absolute;
-    top: 40px;
-    /* left间隔70px */
-    background-color: #f9f9f9;
-    min-width: 160px;
-    border: gainsboro solid 1px;
-    text-align: left;
+    z-index: 0;
+}   
+
+#menu-nav {
+    width: $menu-bar-height;
+    height: $menu-bar-height;
+    float: left;
+   
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+
+    position: absolute;
+    z-index: 3;
+
+    &:hover {
+        background-color: #24293a;
+    }
 }
 
-.show-dropdown-content{
-    display: block;
+$nav-icon-width: 16px;
+$nav-icon-height: 12px;
+$nav-icon-span-height: 2px;
+
+#nav-icon {
+    width: $nav-icon-width;
+    height: $nav-icon-height;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    margin: auto;
+    & span {
+        display: block;
+        position: absolute;
+        height: $nav-icon-span-height;
+        width: 100%;
+        background: #9a9db3;
+        border-radius: $nav-icon-span-height;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+
+        &:nth-child(1) {
+            top: 0px;
+        }
+        &:nth-child(2) {
+            top: ($nav-icon-height - $nav-icon-span-height) * 0.5;
+        }
+        &:nth-child(3) {
+            top: ($nav-icon-height - $nav-icon-span-height);
+        }
+    }
+
+    &.open span {
+        &:nth-child(1) {
+            top: ($nav-icon-height - $nav-icon-span-height) * 0.5;
+            transform: rotate(-135deg);
+        }
+        &:nth-child(2) {
+            opacity: 0;
+            left: $nav-icon-width;
+        }
+        &:nth-child(3) {
+            top: ($nav-icon-height - $nav-icon-span-height) * 0.5;
+            transform: rotate(135deg);
+        }
+    } 
 }
 
-.dropdown-content a {
-    color: black;
-    padding: 6px 16px;
-    text-decoration: none;
-    font-size: 12px;
-    display: block;
+#menu-bar-toggle {
+    height: inherit;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+#menu-info {
+    height: inherit;
+    width: 100%;
+    line-height: $menu-bar-height;
+    text-align: center;
+    background: #292d43;
+    background: -webkit-linear-gradient(left, #292d43 0%,#2d364e 50%,#262b41 100%);
+    background: linear-gradient(to right, #292d43 0%,#2d364e 50%,#262b41 100%);
 
-.sub-menu:hover .dropdown-content {
-    display: block;
+    position: absolute;
+    z-index: 2;
 }
 
+#menu-bar-buttons {
+    height: $menu-bar-height;
+    left: $menu-bar-height;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+}
+ 
+.menu-item {
+    height: inherit;
+    width: $menu-item-width;
+    
+    line-height: $menu-bar-height;
+    float: left;
+    cursor: pointer;
+    text-align: center;
 
+    &:hover, &.active {
+        background-color: #24293a;
+        color: #9295a9;
+    }
+}
 
+.top-right-buttons {
+    float: right;
+    height: inherit;
+    width: $menu-bar-height;
+    line-height: $menu-bar-height;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    &.close:hover {
+        background-color: #e64d4c;
+        color: #d8d8d8;
+    }
+    &.restore_down:hover,
+    &.maximize:hover {
+        background-color: #1f2433;
+        color: #9295a9;
+    }
+    &.minimize:hover {
+        background-color: #222738;
+        color: #9295a9;
+    }
+}
 
+.slide-out-up-enter-active, .slide-out-up-leave-active {
+  transition: all .25s ease;
+}
+.slide-out-up-enter, .slide-out-up-leave-to {
+  transform: translateY(-$menu-bar-height);
+}
 </style>
 

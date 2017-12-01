@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-import modules from './modules'
+import FileStatus from './modules/file-status'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules,
-  strict: process.env.NODE_ENV !== 'production'
-})
+    modules: {
+        FileStatus
+    },
+    state: {
+        showLeftBar: false
+    },
+    mutations: {
+      toggleLeftBar(state) {
+        state.showLeftBar = !state.showLeftBar
+      }
+    }
+}) 
