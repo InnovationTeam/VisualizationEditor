@@ -156,5 +156,12 @@
   content: "\e022";
 }
 
+.icon-folder_open:before {
+  content: "\e023";
+}
+
+.icon-folder_close:before {
+  content: "\e024";
+}
 
 

@@ -5,11 +5,12 @@
 		</menu-bar>
 
         <side-bar id="side-bar" />
-		<left-panel id="left-panel" ref="leftPanel" :style="{width: leftPanelWidth + 'px'}">
-		</left-panel>
+		<left-panel id="left-panel" ref="leftPanel" :style="{width: leftPanelWidth + 'px'}"></left-panel>
 		<div class="col-resize" @mousedown="resizePanel_left_editor($event)" 
 			:style="{left: resizeLeft + 'px', width: resizeWidth + 'px'}"></div>
-		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}"></div>
+		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
+			
+		</div>
 
 		<status-bar id="status-bar" />
 		
