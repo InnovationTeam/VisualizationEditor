@@ -112,11 +112,12 @@
         },
         // 监听内容、语言设置选项和主题，达到动态改变语言和主题的效果
         watch: {
-            'content': function (newContent) {
-                if (this.sync) {
-                    this.editor.setValue(newContent, 1);
-                }
-            },
+            // 'content': function (newContent) {
+            //     var vm = this;
+            //     if (this.sync) {
+            //         vm.editor.setValue(newContent);
+            //     }
+            // },
             'lang': function () {
                 this.editor.getSession().setMode('ace/mode/' + this.lang);
             }
@@ -135,7 +136,7 @@
     #editor { 
         margin: 0;
         position: absolute;
-        top: 50px;
+        top: 0;
         bottom: 0;
         left: 0;
         right: 0;
