@@ -81,21 +81,22 @@ function openCatalog(){
 
     //由窗口获取
     let path = dialog.showOpenDialog({properties:['openDirectory']})[0];
-    console.log(path)
+    // console.log(path)
     let seg_path = path.split('\\')
     let name =seg_path[seg_path.length-1]
-    console.log(name)
+    // console.log(name)
 
     let filesList = geFileList(path);
-    console.log(filesList)
+    // console.log(filesList)
     let string1 = JSON.stringify(filesList);
-    console.log(string1)
+    // console.log(string1)
     path = path.replace(/\\/g,'\\\\')
-    console.log(path)
+    // console.log(path)
     let string2 = '{"name":"#0","path":"#1","children":#2}'.replace('#0',name).replace('#1',path).replace("#2",string1);
-    console.log(string2)
+    
     let catalog_tree = JSON.parse(string2)
-    console.log(catalog_tree);
+    
+    return catalog_tree
 }
 
 

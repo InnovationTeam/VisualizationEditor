@@ -6,17 +6,8 @@ const BrowserWindow = remote.BrowserWindow;
 */
 
 
-module.exports={
-    createNewWindow: createWindow,
-    close: close,
-    minimize: minimize,
-    maximize: maximize
-}
-
-
 //全局窗口
 let win
-
 
 //无边框窗口
 function createWindow(){
@@ -61,3 +52,9 @@ function maximize(){
 }
 
  
+module.exports={
+    createNewWindow: createWindow,
+    close: close,
+    minimize: minimize,
+    maximize: maximize
+}

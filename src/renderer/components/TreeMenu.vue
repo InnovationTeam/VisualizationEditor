@@ -23,6 +23,7 @@
 import File from './File'
 import Folder from './Folder'
 
+
 export default {
     name: 'TreeMenu',
     props: {
@@ -41,6 +42,7 @@ export default {
         }
     },
     computed:{
+        
         isFolder() {
             return this.currItem.children !== undefined
         }

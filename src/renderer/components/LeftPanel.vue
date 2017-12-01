@@ -12,16 +12,22 @@ import Icon from './Icon'
 import TreeMenu from './TreeMenu'
 import TestFile from '../assets/test-tree.json'
 
+import {mapGetters} from 'vuex'
+
 export default {
     data () {
        
-        return {
-            currPath: 'root',
-            root: TestFile
-        }
+        // return {
+        //     currPath: 'root',
+        //     root: TestFile
+        // }
+        return {}
     },
     computed: {
-        
+        ...mapGetters({
+            currPath: 'getRootPath',
+            root: 'getRootChildren'
+        })
     },
     components: {
         'file-tree': TreeMenu

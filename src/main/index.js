@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron'
+import {createWindow} from '../API/electron_api.js'
 
 /**
  * Set `__static` path to static files in production
