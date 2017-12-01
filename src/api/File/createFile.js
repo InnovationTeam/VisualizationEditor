@@ -1,6 +1,6 @@
 var fs=require("fs");
 
-export function createDir(dirname)
+function createDir(dirname)
 {
 
     fs.mkdir(dirname,function(err){
@@ -8,21 +8,21 @@ export function createDir(dirname)
     })
 }
 
-export function  deleteDir(dirname)
+function  deleteDir(dirname)
 {
     fs.rmdir(dirname,function(err){
         console.log(err);
     })
 } 
 
-export function renameDir(dirname,newDirname)
+function renameDir(dirname,newDirname)
 {
     fs.rename(dirname,newDirname,function(err){
         console.log(err);
     })
 }
 
-export function watchDir(dirname)
+function watchDir(dirname)
 {
     fs.watch(dirname,function(eventname,filename){
         console.log(eventname);
@@ -32,7 +32,7 @@ export function watchDir(dirname)
 
 
 
-export function createFileByPath(filepath)
+function createFileByPath(filepath)
 {
     fs.writeFile(filename,function(){
         if(err){
@@ -41,4 +41,12 @@ export function createFileByPath(filepath)
         }
         console.log(filepath);
     })
+}
+
+module.exports = {
+    createDir,
+    deleteDir,
+    renameDir,
+    watchDir,
+    createFileByPath,
 }

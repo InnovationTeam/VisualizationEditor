@@ -1,5 +1,5 @@
 
-export function saveFile(self)
+function saveFile(self)
 {
     var vm=self.$children[0];//获取当前编辑器指针
     var editor = vm.editor;
@@ -12,4 +12,7 @@ export function saveFile(self)
     fs.writeFile(filepath,content,function(err){
         if(err) throw err;
     });
+}
+module.exports = {
+    saveFile: saveFile
 }
