@@ -130,15 +130,17 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
     /* 设置编辑区的样式 */
     #editor { 
-        margin: 0;
-        position: absolute;
-        top: 50px;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        // margin: 0;
+        // position: absolute;
+        // top: 50px;
+        // bottom: 0;
+        // left: 0;
+        // right: 0;
+        width: 100%;
+        height: 100%;
     }
 </style>
 

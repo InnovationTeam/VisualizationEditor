@@ -1,9 +1,7 @@
 <template>
-  <div>
+  <div id="editor">
         <editor-model :content="content" :theme="theme" :lang="lang" :options="options" 
             @change="change" @copy="copy" @paste="paste"> </editor-model>
-        <button @click="openfile">openfile</button>
-        <button @click="savefile">savefile</button>
   </div>
 </template>
 
@@ -44,14 +42,6 @@
 
     },
     methods: {
-        openfile(){
-
-        },
-        savefile(){},
-        
-        undo(){
-            undo(this);
-        },
         getValue() {
             this.code = this.$children[0].getValue();
         },
@@ -69,6 +59,16 @@
 </script>
 
 
-<style>
-
+<style lang="scss" scoped>
+    /* 设置编辑区的样式 */
+    #editor { 
+        // margin: 0;
+        // position: absolute;
+        // top: 50px;
+        // bottom: 0;
+        // left: 0;
+        // right: 0;
+        width: 100%;
+        height: 100%;
+    }
 </style>
