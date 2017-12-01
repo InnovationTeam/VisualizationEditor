@@ -1,32 +1,63 @@
 const remote = require('electron').remote;
 const BrowserWindow = remote.BrowserWindow;
 
+/*
+    跟electron窗口操作相关的api
+*/
+
+
+module.exports={
+    createNewWindow: createWindow,
+    close: close,
+    minimize: minimize,
+    maximize: maximize
+}
+
+
+//全局窗口
+let win
+
 
 //无边框窗口
-exports.createNewWindow = function createNewWindow(){
-    var win = new BrowserWindow({width:800, height:600,frame:false})
+function createWindow(){
+
+    win = new BrowserWindow({
+        height: 563,
+        useContentSize: true,
+        width: 1000
+      })
     //展示窗口
     win.show()
 
-    //最小化、最大化、关闭窗口
-    win.close()
-    win.maximize()
-    win.minimize()
+    win.on('closed', () => {
+        win = null
+      })
 
-    //设置可拖动区域
-    //Vue中添加样式，如：
-    // button {
-    //     -webkit-app-region: drag;
-    //   }
 
-    //设置伸缩窗口
-    //有点难，先与前端沟通
-    
-    //思考，一个窗口创建出来后是不是独立的进程，
-    //怎么知道操作是对哪一个窗口进行。
+      if (process.env.NODE_ENV !== 'development') {
+        global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+      }
+
+      const winURL = process.env.NODE_ENV === 'development'
+      ? `http://localhost:9080`
+      : `file://${__dirname}/index.html`
+      
+      // 加载一个远程地址
+      win.loadURL(winURL)
 
 }
 
 
+function close(){
+    win.close();
+}
 
+function minimize(){
+    win.minimize()
+}
 
+function maximize(){
+    win.maximize()
+}
+
+ 
