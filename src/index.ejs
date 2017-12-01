@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>my-project</title>
+    <title>project</title>
     <% if (htmlWebpackPlugin.options.nodeModules) { %>
       <!-- Add `node_modules/` to global paths so `require` works properly in development -->
       <script>
@@ -12,11 +12,16 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- <div>
+      <div id="editor"></div>
+    </div> -->
+    
     <!-- Set `__static` path to static files in production -->
     <script>
       if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
     </script>
 
-    <!-- webpack builds are automatically injected -->
+    <script src="static/src/ace.js"></script>
+    <script src="static/src/ext-language_tools.js"></script>
   </body>
 </html>

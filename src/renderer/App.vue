@@ -1,20 +1,15 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div id="application">
+    <!-- <router-view></router-view> -->
     <editor></editor>
   </div>
-
-  
 </template>
 
 <script>
-  import editor_js from "./components/LandingPage"
-
+  import editor from './components/Editor'
   export default {
-    name: 'my-project',
-    components: {
-      'editor': editor_js
-    }
+    name: 'project',
+    components: {editor}
   }
 </script>
 
