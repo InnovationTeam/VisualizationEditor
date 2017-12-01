@@ -16,9 +16,8 @@
 <script>
     // 导入字体样式
     import '../assets/icons/iconfont.css'
-
-    var file = require('../../api/file.js');
-    var window = require('../../api/electron_api.js');
+    import {openCatalog} from '../../api/catalog.js'
+    import {createNewWindow} from '../../api/electron_api.js'
 
     export default {
         name: 'left-bar',
@@ -29,10 +28,10 @@
         },
         methods:{
             method1: function(){  
-                file.openFile();
+                openCatalog();
             },
             method2: function(){  
-                window.createNewWindow();
+                createNewWindow()
             },
             method3: function(){
                 alert("Icon3");

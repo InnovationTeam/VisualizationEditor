@@ -1,12 +1,11 @@
+const remote = require('electron').remote;
+const dialog = remote.dialog;
+const fs = require('fs');
 
-var fs = require('fs')
 
-
-//遍历文件夹，获取所有文件夹里面的文件信息
 /*
- * @param path 路径
- *
- */
+    遍历文件夹，获取所有文件夹里面的文件信息，返回目录树。
+*/
 
 
 
@@ -22,11 +21,12 @@ function geFileList(path)
 //遍历读取文件
 function readFile(path,filesList,targetObj)
 {
-   files = fs.readdirSync(path);//需要用到同步读取
+   console.log(path)
+   let files = fs.readdirSync(path);//需要用到同步读取
    files.forEach(walk);
    function walk(file)
    {  
-        states = fs.statSync(path+'/'+file);         
+        let states = fs.statSync(path+'/'+file);         
         if(states.isDirectory())
         {
             var item ;
@@ -53,12 +53,12 @@ function readFile(path,filesList,targetObj)
 
             if(targetObj["children"])
             {
-               var item = {name:file,value:obj.path}
+               var item = {name:file}
                targetObj["children"].push(item);
             }
             else
             {
-                var item = {name:file,value:obj.path};
+                var item = {name:file};
                 filesList.push(item);
             }
         }     
@@ -75,10 +75,33 @@ function writeFile(fileName,data)
   } 
 }
 
-//由窗口获取
-path = "G:\\Github\\VisualizationEditor\\dist"
 
-var filesList = geFileList(path);
-var str = JSON.stringify(filesList);
-str = "var data ={name:'#0',children:#1}".replace('#0',path).replace("#1",str);
-writeFile("tree.js",str);
+
+function openCatalog(){
+
+    //由窗口获取
+    let path = dialog.showOpenDialog({properties:['openDirectory']})[0];
+    console.log(path)
+    let seg_path = path.split('\\')
+    let name =seg_path[seg_path.length-1]
+    console.log(name)
+
+    let filesList = geFileList(path);
+    console.log(filesList)
+    let string1 = JSON.stringify(filesList);
+    console.log(string1)
+    path = path.replace(/\\/g,'\\\\')
+    console.log(path)
+    let string2 = '{"name":"#0","path":"#1","children":#2}'.replace('#0',name).replace('#1',path).replace("#2",string1);
+    console.log(string2)
+    let catalog_tree = JSON.parse(string2)
+    console.log(catalog_tree);
+}
+
+
+// module.exports = {
+//     openCatalog: openCatalog
+// }
+
+
+export {openCatalog}

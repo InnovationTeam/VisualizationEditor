@@ -19,6 +19,8 @@ export function loadFile(){
     return loadFileByPath(filepath[0]);
 }
 
+
+
 export function loadFile2(){
     var filepath=dialog.showOpenDialog({properties: ['openFile', 'multiSelections']});
     var result=[

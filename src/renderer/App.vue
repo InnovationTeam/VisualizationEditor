@@ -2,7 +2,6 @@
   <div >
 
     <div>
-      <menu-bar></menu-bar>
       <el-container style="height: 800px;width: 1100px; border: 2px solid #eee">
         <!-- 左侧常用功能 -->
         <left-bar></left-bar>
@@ -24,7 +23,6 @@
 <script>
 import LeftBar from './components/LeftBar'
 import DropDown from './components/DropDown'
-import MenuBar from './components/MenuBar'
 import Editor_js from './components/Editor_js'
 
   export default {
@@ -37,7 +35,6 @@ import Editor_js from './components/Editor_js'
   components: {
 		'left-bar': LeftBar,
 		'drop-down': DropDown,
-		'menu-bar': MenuBar,
 		'editor': Editor_js
   },
 	methods: {
