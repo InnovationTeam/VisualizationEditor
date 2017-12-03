@@ -1,0 +1,19 @@
+
+const {ipcRenderer}=require('electron')
+
+function paste(self)
+{
+    var vm=self.$children[0];//获取当前编辑器指针
+    var editor = vm.editor
+    editor.paste();
+}
+
+function pasteByElectron()
+{
+    ipcRenderer.send('pastetest','pastetest');
+}
+
+module.exports = {
+    paste,
+    pasteByElectron
+}

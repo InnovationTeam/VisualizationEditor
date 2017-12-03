@@ -2,13 +2,14 @@
   <div id="editor">
         <editor-model :content="content" :theme="theme" :lang="lang" :options="options" 
              @copy="copy" @paste="paste"> </editor-model>
-
+        <button @click="test">click</button>
   </div>
 </template>
 
 <script>
   import EditorModel from './Editor/EditorModel'
-
+  import copy from '../../api/Edit/copy'
+  import paste from '../../api/Edit/paste'
 
   export default {
     name: 'editor',
@@ -47,6 +48,10 @@
 
     },
     methods: {
+        test(){
+            paste.pasteByElectron();
+
+        },
         getValue() {
             this.code = this.$children[0].getValue();
         },
