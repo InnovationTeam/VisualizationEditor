@@ -19,7 +19,7 @@
 
 
 <script>
-import Icon from './Icon'
+import Icon from './common/Icon'
 import LEFTBAR_TEXT from '../assets/i18n/chs/leftbar.i18n.json'
 
 export default {

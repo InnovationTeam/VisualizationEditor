@@ -8,7 +8,7 @@
 
 
 <script>
-import Icon from './Icon'
+import Icon from './common/Icon'
 import TreeMenu from './TreeMenu'
 import TestFile from '../assets/test-tree.json'
 

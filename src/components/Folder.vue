@@ -4,7 +4,7 @@
 
         <span class="folderName">
             <template v-if="!changing">
-                <span @dblclick="changeName">{{ folderName }}</span>
+                <span @click.right="changeName">{{ folderName }}</span>
             </template>
             <template v-else>
                 <input @keyup.enter="notChange" @blur="notChange" v-focus="folderName" v-enter="!changing" v-model="folderName" spellcheck="false">
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Icon from './Icon'
+import Icon from './common/Icon'
 
 export default {
     props: {

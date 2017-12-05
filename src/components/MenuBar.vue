@@ -40,7 +40,7 @@
 <script>
 import SubMenu from './SubMenu'
 import MenuItem from './MenuItem'
-import Icon from './Icon'
+import Icon from './common/Icon'
 import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
 
 export default {

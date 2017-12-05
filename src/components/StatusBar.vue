@@ -13,7 +13,7 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import Icon from './Icon'
+import Icon from './common/Icon'
 
 export default {
     data() {
