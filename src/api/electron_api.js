@@ -1,6 +1,7 @@
 const remote = require('electron').remote;
 const BrowserWindow = remote.BrowserWindow;
 
+
 /*
     跟electron窗口操作相关的api
 */
@@ -17,8 +18,7 @@ function createWindow(){
         useContentSize: true,
         width: 1000
       })
-    //展示窗口
-    win.show()
+
 
     win.on('closed', () => {
         win = null
@@ -40,20 +40,23 @@ function createWindow(){
 
 
 function close(){
-    win.close();
+    let window = BrowserWindow.getFocusedWindow()
+    window.close()
 }
 
 function minimize(){
-    win.minimize()
+    let window = BrowserWindow.getFocusedWindow()
+    window.minimize()
 }
 
 function maximize(){
-    win.maximize()
+    let window = BrowserWindow.getFocusedWindow()
+    window.maximize()
 }
 
  
 module.exports={
-    createNewWindow: createWindow,
+    createWindow: createWindow,
     close: close,
     minimize: minimize,
     maximize: maximize

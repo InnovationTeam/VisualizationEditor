@@ -65,15 +65,6 @@ function readFile(path,filesList,targetObj)
     }
 }
 
-//写入文件utf-8格式
-function writeFile(fileName,data)
-{  
-  fs.writeFile(fileName,data,'utf-8',complete);
-  function complete()
-  {
-     console.log("文件生成成功");
-  } 
-}
 
 
 
@@ -81,25 +72,19 @@ function openCatalog(){
 
     //由窗口获取
     let path = dialog.showOpenDialog({properties:['openDirectory']})[0];
-    // console.log(path)
     let seg_path = path.split('\\')
     let name =seg_path[seg_path.length-1]
-    // console.log(name)
-
+    //获取目录结构
     let filesList = geFileList(path);
-    // console.log(filesList)
     let string1 = JSON.stringify(filesList);
-    // console.log(string1)
     path = path.replace(/\\/g,'\\\\')
-    // console.log(path)
     let string2 = '{"name":"#0","path":"#1","children":#2}'.replace('#0',name).replace('#1',path).replace("#2",string1);
-    
     let catalog_tree = JSON.parse(string2)
     
     return catalog_tree
 }
 
-
+//这样导出存在bug, 无法识别JSON包,暂未解决
 // module.exports = {
 //     openCatalog: openCatalog
 // }

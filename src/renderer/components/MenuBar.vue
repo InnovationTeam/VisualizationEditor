@@ -27,10 +27,10 @@
                 </div>
             </template>
 
-		    <span class="top-right-buttons close" @click="openDirectory"><icon :iconType="'close'" /></span> 
+		    <span class="top-right-buttons close" @click="Close"><icon :iconType="'close'" /></span> 
 		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'restore_down'" /></span>
 		    <span class="top-right-buttons maximize" :style="{display: isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'maximize'" /></span>
-            <span class="top-right-buttons minimize"><icon :iconType="'minimize'" /></span>
+            <span class="top-right-buttons minimize" @click="createWindow"><icon :iconType="'minimize'" /></span>
         </div>
     </div>
 </div>
@@ -41,7 +41,7 @@
 import SubMenu from './SubMenu'
 import MenuItem from './MenuItem'
 import Icon from './Icon'
-import {close,minimize,maximize} from '../../API/electron_api.js'
+import {close,minimize,maximize,createWindow} from '../../API/electron_api.js'
 import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
 
 import {mapMutations} from 'vuex'
@@ -195,6 +195,9 @@ export default {
         },
         Close() {
             close()
+        },
+        createWindow(){
+            createWindow()
         }
     },
     mounted() {    
