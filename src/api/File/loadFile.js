@@ -36,5 +36,6 @@ function loadDirpath()
 
 module.exports = {
     loadFile,
+    loadFileByPath,
     loadDirpath
 }
