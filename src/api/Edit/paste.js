@@ -1,19 +1,12 @@
 
-const {ipcRenderer}=require('electron')
+const remote=require('electron').remote;
 
-function paste(self)
-{
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
-    editor.paste();
-}
 
 function pasteByElectron()
 {
-    ipcRenderer.send('pastetest','pastetest');
+    remote.getCurrentWebContents().paste();
 }
 
 module.exports = {
-    paste,
     pasteByElectron
 }

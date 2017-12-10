@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-import {ipcMain} from 'electron'
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -29,18 +29,10 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
-  contents=mainWindow.webContents
+  contents=mainWindow.webContents;
 }
 
-ipcMain.on('copytest',(event,arg)=>{
-  contents.copy();
-  console.log(arg);
-})
 
-ipcMain.on('pastetest',(event,arg)=>{
-  contents.paste();
-  console.log(arg);
-})
 
 app.on('ready', createWindow)
 

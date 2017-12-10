@@ -1,13 +1,12 @@
 
+const remote=require('electron').remote;
 
 
-function cut(self)
+function cutByElectron()
 {
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
-    editor.cut();
+    remote.getCurrentWebContents().cut();
 }
 
 module.exports = {
-   cut
+   cutByElectron
 }

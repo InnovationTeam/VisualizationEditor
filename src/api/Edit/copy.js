@@ -1,20 +1,14 @@
 
-const {ipcRenderer}=require('electron')
+const remote=require('electron').remote;
 
 
-function copy(self)
-{
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
-    console.log(editor.copyLinesDown());
-}
 
 function copyByElectron()
 {
-    ipcRenderer.send('copytest','copytest');
+    let content = remote.getCurrentWebContents().copy();
+    console.log(content);  
 }
 
 module.exports = {
-   copy,
    copyByElectron
 }
