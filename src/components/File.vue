@@ -7,7 +7,8 @@
                 <span @click.right="changeName">{{ fileName }}</span>
             </template>
             <template v-else>
-                <input @keyup.enter="notChange" @blur="notChange" v-focus="fileName" v-enter="!changing" v-model="fileName" spellcheck="false">
+                <input @keyup.enter="finishChange" @blur="commitChange" 
+                v-focus="newName" v-enter="!changing" v-model="newName" spellcheck="false">
             </template>
         </span>
     </div>
@@ -18,41 +19,42 @@ import Icon from './common/Icon'
 
 export default {
     props: {
-        fileName: String
+        fileName: String,
+        id: String
     },
     data() {
-        let availableExtension = {
-            'js': 'javascript',
-            'wxs': 'javascript',
-            'wxss': 'css',
-            'json': 'json',
-            'wxml': 'html'
-        }
         return {
-            dir: 'src/test',
             changing: false,
-            availableExtension: availableExtension
+            newName: this.fileName
         }
     },
     methods: {
         changeName() {
             this.changing = true
-        },
-        notChange() {
+        }, 
+        finishChange() {
             this.changing = false
-            if(this.fileName === '')
-                this.fileName = 'untitled'
+        },
+        commitChange() {
+            this.changing = false
+            if(this.newName === '')
+                this.newName = 'untitled'
+            
+            this.$store.commit('FileControl/CHANGE_NAME', {
+                id: this.id, 
+                newName: this.newName
+            })
         }
     },
     computed:{
         extension() {
-            let index = this.fileName.lastIndexOf('.')
-            return index > 0 ? this.fileName.substring(index + 1).toLowerCase() : ''
+            let index = this.newName.lastIndexOf('.')
+            return index > 0 ? this.newName.substring(index + 1).toLowerCase() : ''
         },
 		iconType() {
-            let type = this.availableExtension[this.extension]
+            let type = this.$store.getters['FileControl/getIconType'](this.extension)
             return type !== undefined ? type : 'default'
-		}
+        }
     },
     directives: {
         focus: {

@@ -8,9 +8,9 @@
 		<left-panel id="left-panel" ref="leftPanel" :style="{width: leftPanelWidth + 'px'}"></left-panel>
 		<div class="col-resize" @mousedown="resizePanel_left_editor($event)" 
 			:style="{left: resizeLeft + 'px', width: resizeWidth + 'px'}"></div>
-		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
-			<editor id="editor"></editor>
-		</div>
+		<editor-panel id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
+			<!-- <editor id="editor"></editor> -->
+		</editor-panel>
 
 		<status-bar id="status-bar" />		
 	</div>
@@ -21,7 +21,8 @@ import SideBar from './components/SideBar'
 import StatusBar from './components/StatusBar'
 
 import LeftPanel from './components/LeftPanel'
-import Editor from './components/Editor'
+import EditorPanel from './components/EditorPanel'
+// import Editor from './components/Editor'
 
 export default {
 	data () {
@@ -43,7 +44,8 @@ export default {
 		'side-bar': SideBar,
 		'status-bar': StatusBar,
 		'left-panel': LeftPanel,
-		'editor': Editor
+		'editor-panel': EditorPanel
+		// 'editor': Editor
   	},
 	methods: {
 		resizePanel_left_editor(event){
@@ -117,12 +119,6 @@ $status-bar-height: 25px;
     background: -webkit-linear-gradient(top, #3f4760 0%, #1a223f 100%);
     background: linear-gradient(to bottom, #3f4760 0%, #1a223f 100%);
     z-index: -2;
-    font-size: 5em;
-}
-
-#editor {
-	height: 100%;
-	width: 100%;
 }
 
 .col-resize {
