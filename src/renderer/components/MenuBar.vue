@@ -21,7 +21,7 @@
                     <span>{{ menu.title }}</span>
                     <sub-menu v-if="showMenu === menu.title">
                         <template v-for="item in menu.items">
-                            <menu-item :key="item">{{ item }}</menu-item>
+                            <menu-item @click.native="item.method(item.name)" :key="item.name">{{ item.name }}</menu-item>
                         </template>
                     </sub-menu>
                 </div>
@@ -40,108 +40,123 @@
 <script>
 import SubMenu from './SubMenu'
 import MenuItem from './MenuItem'
-import Icon from './Icon'
+import Icon from './common/Icon'
 import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
 
 export default {
     data(){
         let menu_texts = []
-        let menu_item = {
+        var menu_item = {
             title: '',
             items: []
         }
 
         let index = 'MENU_FILE'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push(MENU_TEXT[index + '_NEW_PROJECT'])
-        menu_item.items.push(MENU_TEXT[index + '_NEW_FILE'])
-        menu_item.items.push(MENU_TEXT[index + '_NEW_WINDOW'])
-        menu_item.items.push(MENU_TEXT[index + '_OPEN_FILE'])
-        menu_item.items.push(MENU_TEXT[index + '_OPEN_FOLDER'])
-        menu_item.items.push(MENU_TEXT[index + '_OPEN_RECENT'])
-        menu_item.items.push(MENU_TEXT[index + '_SAVE'])
-        menu_item.items.push(MENU_TEXT[index + '_SAVE_AS'])
-        menu_item.items.push(MENU_TEXT[index + '_SAVE_ALL'])
-        menu_item.items.push(MENU_TEXT[index + '_AUTO_SAVE'])
-        menu_item.items.push(MENU_TEXT[index + '_OPTION'])
-        menu_item.items.push(MENU_TEXT[index + '_CLOSE_EDITOR'])
-        menu_item.items.push(MENU_TEXT[index + '_CLOSE_FOLDER'])
-        menu_item.items.push(MENU_TEXT[index + '_CLOSE_WINDOW'])
-        menu_item.items.push(MENU_TEXT[index + '_RELOAD'])
-        menu_item.items.push(MENU_TEXT[index + '_EXIT'])
-        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_PROJECT'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_FILE'],     method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_WINDOW'],   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FILE'],    method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FOLDER'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_RECENT'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE'],         method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_AS'],      method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_ALL'],     method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_AUTO_SAVE'],    method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_OPTION'],       method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_EDITOR'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_FOLDER'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_WINDOW'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_RELOAD'],       method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_EXIT'],         method: (name) => {alert(name)} })
+        menu_texts.push(menu_item)
 
-        menu_item.items = []
+        var menu_item = {
+            title: '',
+            items: []
+        }
         index = 'MENU_EDIT'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push(MENU_TEXT[index + '_UNDO'])
-        menu_item.items.push(MENU_TEXT[index + '_REDO'])
-        menu_item.items.push(MENU_TEXT[index + '_CUT'])
-        menu_item.items.push(MENU_TEXT[index + '_COPY'])
-        menu_item.items.push(MENU_TEXT[index + '_PASTE'])
-        menu_item.items.push(MENU_TEXT[index + '_FIND'])
-        menu_item.items.push(MENU_TEXT[index + '_REPLACE'])
-        menu_item.items.push(MENU_TEXT[index + '_FIND_IN_FILES'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_LINE_COMMENT'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_BLOCK_COMMENT'])
-        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        menu_item.items.push({ name: MENU_TEXT[index + '_UNDO'],                 method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_REDO'],                 method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CUT'],                  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_COPY'],                 method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_PASTE'],                method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_FIND'],                 method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_REPLACE'],              method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_FIND_IN_FILES'],        method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_LINE_COMMENT'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_BLOCK_COMMENT'], method: (name) => {alert(name)} })
+        menu_texts.push(menu_item)
 
-        menu_item.items = []
+        var menu_item = {
+            title: '',
+            items: []
+        }
         index = 'MENU_SELECT'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push(MENU_TEXT[index + '_SELECT_ALL'])
-        menu_item.items.push(MENU_TEXT[index + '_COPY_PREV_LINE'])
-        menu_item.items.push(MENU_TEXT[index + '_COPY_NEXT_LINE'])
-        menu_item.items.push(MENU_TEXT[index + '_MOVE_PREV_LINE'])
-        menu_item.items.push(MENU_TEXT[index + '_MOVE_NEXT_LINE'])
-        menu_item.items.push(MENU_TEXT[index + '_ADD_CURSOR_ABOVE'])
-        menu_item.items.push(MENU_TEXT[index + '_ADD_CURSOR_BELOW'])
-        menu_item.items.push(MENU_TEXT[index + '_ADD_CURSOR_EACH_LINE_END'])
-        menu_item.items.push(MENU_TEXT[index + '_ADD_SELECTION_TO_NEXT_FIND_MATCH'])
-        menu_item.items.push(MENU_TEXT[index + '_ADD_SELECTION_TO_LAST_FIND_MATCH'])
-        menu_item.items.push(MENU_TEXT[index + '_ADD_SELECTION_TO_ALL_FIND_MATCH'])
-        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        menu_item.items.push({ name: MENU_TEXT[index + '_SELECT_ALL'],                       method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_COPY_PREV_LINE'],                   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_COPY_NEXT_LINE'],                   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_MOVE_PREV_LINE'],                   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_MOVE_NEXT_LINE'],                   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ADD_CURSOR_ABOVE'],                 method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ADD_CURSOR_BELOW'],                 method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ADD_CURSOR_EACH_LINE_END'],         method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ADD_SELECTION_TO_NEXT_FIND_MATCH'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ADD_SELECTION_TO_LAST_FIND_MATCH'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ADD_SELECTION_TO_ALL_FIND_MATCH'],  method: (name) => {alert(name)} })
+        menu_texts.push(menu_item)
 
-        menu_item.items = []
+        var menu_item = {
+            title: '',
+            items: []
+        }
         index = 'MENU_VIEW'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push(MENU_TEXT[index + '_VIEWEXPLORER'])
-        menu_item.items.push(MENU_TEXT[index + '_SEARCH'])
-        menu_item.items.push(MENU_TEXT[index + '_PROBLEM'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_FULL_SCREEN'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_ZEN_MODE'])
-        menu_item.items.push(MENU_TEXT[index + '_SPLIT_EDITOR'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_EDITOR_LAYOUT'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_MENU_BAR'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_SIDE_BAR'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_PANEL'])
-        menu_item.items.push(MENU_TEXT[index + '_HIDE_STATUS_BAR'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_RIGHT_SIDE_BAR'])
-        menu_item.items.push(MENU_TEXT[index + '_TOGGLE_RENDER_WHITE_SPACE'])
-        menu_item.items.push(MENU_TEXT[index + '_ZOOM_IN'])
-        menu_item.items.push(MENU_TEXT[index + '_ZOOM_OUT'])
-        menu_item.items.push(MENU_TEXT[index + '_ZOOM_RESET'])
-        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        menu_item.items.push({ name: MENU_TEXT[index + '_VIEWEXPLORER'],              method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SEARCH'],                    method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_PROBLEM'],                   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_FULL_SCREEN'],        method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_ZEN_MODE'],           method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SPLIT_EDITOR'],              method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_EDITOR_LAYOUT'],      method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_MENU_BAR'],           method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_SIDE_BAR'],           method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_PANEL'],              method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_HIDE_STATUS_BAR'],           method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_RIGHT_SIDE_BAR'],     method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_TOGGLE_RENDER_WHITE_SPACE'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ZOOM_IN'],                   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ZOOM_OUT'],                  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ZOOM_RESET'],                method: (name) => {alert(name)} })
+        menu_texts.push(menu_item)
 
-        menu_item.items = []
+        var menu_item = {
+            title: '',
+            items: []
+        }
         index = 'MENU_GOTO'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push(MENU_TEXT[index + '_BACK'])
-        menu_item.items.push(MENU_TEXT[index + '_FORWARD'])
-        menu_item.items.push(MENU_TEXT[index + '_GOTO_FILE'])
-        menu_item.items.push(MENU_TEXT[index + '_GOTO_DEFINITION'])
-        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        menu_item.items.push({ name: MENU_TEXT[index + '_BACK'],            method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_FORWARD'],         method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_GOTO_FILE'],       method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_GOTO_DEFINITION'], method: (name) => {alert(name)} })
+        menu_texts.push(menu_item)
         
-        menu_item.items = []
+        var menu_item = {
+            title: '',
+            items: []
+        }
         index = 'MENU_HELP'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push(MENU_TEXT[index + '_RELEASE_NOTES'])
-        menu_item.items.push(MENU_TEXT[index + '_LICENSE'])
-        menu_item.items.push(MENU_TEXT[index + '_REPORT'])
-        menu_item.items.push(MENU_TEXT[index + '_WELCOME'])
-        menu_item.items.push(MENU_TEXT[index + '_CHECK_UPDATE'])
-        menu_item.items.push(MENU_TEXT[index + '_ABOUT'])
-        menu_texts.push(JSON.parse(JSON.stringify(menu_item)))
+        menu_item.items.push({ name: MENU_TEXT[index + '_RELEASE_NOTES'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_LICENSE'],       method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_REPORT'],        method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_WELCOME'],       method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CHECK_UPDATE'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_ABOUT'],         method: (name) => {alert(name)} })
+        menu_texts.push(menu_item)
 
         return {
             menus: menu_texts,
@@ -185,6 +200,9 @@ export default {
             this.showMenu = ''
             this.isFocus = false
             this.$store.commit('toggleLeftBar')
+        },
+        test() {
+            alert('a')
         }
     },
     mounted() {    

@@ -164,4 +164,15 @@
   content: "\e024";
 }
 
+.icon-close_file:before {
+  content: "\e025";
+}
+
+.icon-angle_right:before {
+  content: "\e026";
+}
+
+.icon-have_changed:before {
+  content: "\e027";
+}
 
