@@ -9,6 +9,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
+let contents
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -28,7 +29,10 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+  contents=mainWindow.webContents;
 }
+
+
 
 app.on('ready', createWindow)
 
