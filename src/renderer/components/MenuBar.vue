@@ -27,7 +27,7 @@
                 </div>
             </template>
 
-		    <span class="top-right-buttons close" @click="Close"><icon :iconType="'close'" /></span> 
+		    <span class="top-right-buttons close" @click="openDirectory"><icon :iconType="'close'" /></span> 
 		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'restore_down'" /></span>
 		    <span class="top-right-buttons maximize" :style="{display: isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'maximize'" /></span>
             <span class="top-right-buttons minimize" @click="createWindow"><icon :iconType="'minimize'" /></span>
