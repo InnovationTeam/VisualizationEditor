@@ -1,13 +1,20 @@
 <template>
-    <div class="tab">
-        test.css
+    <div :class="['tab', isActive ? 'active' : '']" 
+    :style="{fontStyle: isTemp ? 'italic' : 'normal'}">
+        {{ fileName }}
+        <span v-show="isActive" class="close-file-icon">
+            <slot name="close-file-icon"></slot>
+        </span>
     </div>
 </template>
 
 <script>
 export default {
     props: {
-        fileName: String
+        fileName: String,
+        id: String,
+        isTemp: Boolean,
+        isActive: Boolean
     },
     computed: {
         extension() {
@@ -36,9 +43,18 @@ $tab-list-height: 30px;
         right: 10px;
     }
     cursor: pointer;
-    &:hover{
+    &.active{
         background-color: #24293a;
         color: #9295a9;
+    }
+}
+
+.close-file-icon {
+    margin-left: 10px;
+    font-style: normal;
+
+    &:hover {
+        color: white;
     }
 }
 

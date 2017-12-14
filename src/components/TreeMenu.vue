@@ -12,7 +12,7 @@
             </div>
         </template>
         <template v-else>
-            <span @dblclick="openFile" :ref="id">
+            <span @click="openTemporarily" @dblclick="openFile" :ref="id">
                 <File v-bind="{fileName: name, id: id}"/>
             </span>
         </template>
@@ -32,8 +32,17 @@ export default {
         parentPath: String
     },                 
     methods: {
+        openTemporarily() {
+            this.$store.commit('FileControl/OPEN_TEMPORARILY', {
+                id: this.currItem.id,
+                path: this.currPath
+            })
+        },
         openFile(){
-            alert(this.currPath)
+            this.$store.commit('FileControl/OPEN_FILE', {
+                id: this.currItem.id,
+                path: this.currPath
+            })
         }
     },
     computed:{

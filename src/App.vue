@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<menu-bar id="menu-bar">
-			<span slot="current-file">test.css</span>
+			<span slot="current-file">{{ activeFile }}</span>
 		</menu-bar>
 
         <side-bar id="side-bar" />
@@ -32,6 +32,10 @@ export default {
     	}
 	},
 	computed:{
+		activeFile() {
+			let file = this.$store.getters['FileControl/getActiveFile']
+			return file === undefined ? '未打开文件' : file.name
+		},
 		resizeLeft(){
 			return this.leftPanelWidth - this.resizeWidth / 2
 		},
