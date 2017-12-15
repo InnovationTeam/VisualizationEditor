@@ -54,10 +54,16 @@ function maximize(){
     window.maximize()
 }
 
+function unmaximize(){
+    let window = BrowserWindow.getFocusedWindow()
+    window.unmaximize()
+}
+
  
 module.exports={
     createWindow: createWindow,
     close: close,
     minimize: minimize,
-    maximize: maximize
+    maximize: maximize,
+    unmaximize: unmaximize
 }

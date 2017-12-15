@@ -1,19 +1,19 @@
 <template>
     <div>
         <template v-if="isFolder">
-            <input :id="currPath" type="checkbox">
-            <label :for="currPath">
-                <Folder v-bind="{folderName: name}"/>
+            <input :id="id" type="checkbox">
+            <label :for="id">
+                <Folder v-bind="{folderName: name, id: id}"/>
             </label>
             <div class="children">
-                <template v-for="child in currItem.children">
-                    <TreeMenu v-bind="{currItem: child, parentPath: currPath}" :key="currPath + '\\' + child.name"/>
+                <template v-for="child in children">
+                    <TreeMenu v-bind="{currItem: child, parentPath: currPath}" :key="child.id"/>
                 </template>
             </div>
         </template>
         <template v-else>
-            <span @dblclick="openFile" >
-                <File v-bind="{fileName: name}"/>
+            <span @click="openTemporarily" @dblclick="openFile" :ref="id">
+                <File v-bind="{fileName: name, id: id}"/>
             </span>
         </template>
     </div>
@@ -22,43 +22,45 @@
 <script>
 import File from './File'
 import Folder from './Folder'
+import { createNamespacedHelpers } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('FileControl')
 
 export default {
     name: 'TreeMenu',
     props: {
         currItem: Object,
         parentPath: String
-    },
-    data() {
-        return {
-            currPath: this.parentPath + '\\' + this.currItem.name,
-            name: this.currItem.name 
-        }
-    },
+    },                 
     methods: {
+        openTemporarily() {
+            this.$store.commit('FileControl/OPEN_TEMPORARILY', {
+                id: this.currItem.id,
+                path: this.$store.getters['FileControl/getRootPath'] + this.currPath
+            })
+        },
         openFile(){
-            alert(this.currPath)
+            this.$store.commit('FileControl/OPEN_FILE', {
+                id: this.currItem.id,
+                path: this.$store.getters['FileControl/getRootPath'] + this.currPath
+            })
         }
     },
     computed:{
+        currPath() {
+            return this.parentPath + '\\' + this.currItem.name
+        },
+        id() {
+             return this.currItem.id
+        },
+        name() {
+            return this.currItem.name
+        },
+        children() {
+            if(this.isFolder)
+                return this.$store.getters['FileControl/getInfoByIDs'](this.currItem.children)
+        },
         isFolder() {
             return this.currItem.children !== undefined
-        }
-    },
-     directives: {
-        focus: {
-            inserted(el, {value}) {
-                el.focus()
-                let index = value.lastIndexOf('.')
-                el.setSelectionRange(0, index > 0 ? index : -1)
-            }
-        },
-        enter: {
-            inserted(el, {value}) {
-                if(value) {
-                    el.blur()
-                }
-            }
         }
     },
     components: {

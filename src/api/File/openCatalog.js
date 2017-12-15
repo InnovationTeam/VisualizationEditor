@@ -24,7 +24,7 @@ function geFileList(path)
 //遍历读取文件
 function readFile(path,filesList,targetObj)
 {
-   console.log(path)
+   
    let files = fs.readdirSync(path);//需要用到同步读取
    files.forEach(walk);
    function walk(file)
@@ -83,7 +83,7 @@ function readFile(path,filesList,targetObj)
 function openCatalog(){
 
     //由窗口获取
-    let path = dialog.showOpenDialog({properties:['openDirectory']})[0];
+    let path = dialog.showOpenDialog({properties:['openDirectory']})[0]
     let seg_path = path.split('\\')
     let name =seg_path[seg_path.length-1]
     //fileList在新的需求中指示起辅助作用，主要需要id_name和root_children
@@ -93,15 +93,15 @@ function openCatalog(){
         root_children.push(filesList[i].id)
     }
 
-    info = JSON.stringify(id_name)
-    root_children_json = JSON.stringify(root_children)
+    let info = JSON.stringify(id_name)
+    let root_children_json = JSON.stringify(root_children)
     path = path.replace(/\\/g,'\\\\')
-    let tree_json = '{"rootName":"#0","rootPath":"#1","children":#2,"info":#3}'.replace('#0',name).replace('#1',path).replace('#2',root_children_json).replace('#3',info);
-
+    let tree_json = '{"rootName":"#0","rootPath":"#1","children":#2,"info":#3}'.replace('#0',name).replace('#1',path).replace('#2',root_children_json).replace('#3',info)
     let catalog_tree = JSON.parse(tree_json)
     
     return catalog_tree
 }
+
 
 
 

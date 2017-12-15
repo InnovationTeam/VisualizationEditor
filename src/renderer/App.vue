@@ -1,35 +1,18 @@
 <template>
 	<div>
 		<menu-bar id="menu-bar">
-			<span slot="current-file">test.css</span>
+			<span slot="current-file">{{ activeFile }}</span>
 		</menu-bar>
 
         <side-bar id="side-bar" />
 		<left-panel id="left-panel" ref="leftPanel" :style="{width: leftPanelWidth + 'px'}"></left-panel>
 		<div class="col-resize" @mousedown="resizePanel_left_editor($event)" 
 			:style="{left: resizeLeft + 'px', width: resizeWidth + 'px'}"></div>
-		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
-			<editor></editor>
-		</div>
+		<editor-panel id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
+			<!-- <editor id="editor"></editor> -->
+		</editor-panel>
 
-		<status-bar id="status-bar" />
-		
-		<!-- <el-container style="height: 800px;width: 100%; border: 1px solid #eee"> -->
-			<!-- 左侧常用功能 -->
-			<!-- <side-bar></side-bar> -->
-			<!-- <el-container style="background-color: #3C3C3C"> -->
-				<!-- <el-header style="text-align: left; height:30px; font-size: 12px"> -->
-	        <!-- 资源管理器 -->
-				<!-- </el-header> -->
-	      <!-- <drop-down message="打开的编辑器" container="editContainer"></drop-down> -->
-				<!-- <drop-down message="文件夹" container="documentContainer"></drop-down> -->
-			<!-- </el-container> -->
-				<!-- <el-container> -->
-			<!-- <editor></editor> -->
-		<!-- </el-container> -->
-		<!-- </el-container> -->
-
-		
+		<status-bar id="status-bar" />		
 	</div>
 </template>
 <script>
@@ -38,9 +21,8 @@ import SideBar from './components/SideBar'
 import StatusBar from './components/StatusBar'
 
 import LeftPanel from './components/LeftPanel'
-import Editor from './components/Editor'
-
-import DropDown from './components/DropDown'
+import EditorPanel from './components/EditorPanel'
+// import Editor from './components/Editor'
 
 export default {
 	data () {
@@ -50,6 +32,10 @@ export default {
     	}
 	},
 	computed:{
+		activeFile() {
+			let file = this.$store.getters['FileControl/getActiveFile']
+			return file === undefined ? '未打开文件' : file.name
+		},
 		resizeLeft(){
 			return this.leftPanelWidth - this.resizeWidth / 2
 		},
@@ -62,8 +48,8 @@ export default {
 		'side-bar': SideBar,
 		'status-bar': StatusBar,
 		'left-panel': LeftPanel,
-		'drop-down': DropDown,
-		'editor': Editor
+		'editor-panel': EditorPanel
+		// 'editor': Editor
   	},
 	methods: {
 		resizePanel_left_editor(event){
@@ -85,7 +71,6 @@ export default {
 					} else {
 						this.leftPanelWidth = maxWidth
 					}
-					
 				}
 
 				document.onmouseup = () => {
@@ -138,7 +123,6 @@ $status-bar-height: 25px;
     background: -webkit-linear-gradient(top, #3f4760 0%, #1a223f 100%);
     background: linear-gradient(to bottom, #3f4760 0%, #1a223f 100%);
     z-index: -2;
-    font-size: 5em;
 }
 
 .col-resize {
@@ -150,29 +134,4 @@ $status-bar-height: 25px;
 	bottom: $status-bar-height;
     z-index: -1;
 }
-
-// 	.el-header {
-// 		background-color: #2B2B2B;
-// 		color: #dddddd;
-// 		line-height: 30px;
-// 	}
-  
-//   .el-submenu {
-//     height: 30px;
-//     background-color: #555555;
-//   }
-
-// 	.el-aside {
-// 		color: #333;
-// 	}
-
-// 	.editContainer{
-// 		height: 100px;
-// 		width: 100%;
-// 	}
-
-// 	.documentContainer{
-// 		height: 100px;
-// 		width: 100%;
-// 	}
 </style>

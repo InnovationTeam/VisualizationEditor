@@ -1,6 +1,6 @@
 <template>
     <!-- 预先设置style? -->
-    <div id="editor" :style="{height: height, width: width}"></div>
+    <div id="editor"></div>
 </template>
 
 <script>
@@ -42,16 +42,6 @@
             theme: {
                 type: String,
                 default: 'monokai'
-            },
-            // 设置编辑区的高度，应该占满
-            height: {
-                type: String,
-                default: '100%'
-            },
-            // 设置编辑区的宽度，应该占满
-            width: {
-                type: String,
-                default: '100%'
             },
             sync: {
                 type: Boolean,
@@ -130,19 +120,5 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    /* 设置编辑区的样式 */
-    #editor { 
-        // margin: 0;
-        // position: absolute;
-        // top: 50px;
-        // bottom: 0;
-        // left: 0;
-        // right: 0;
-        width: 100%;
-        height: 100%;
-    }
-</style>
 
 

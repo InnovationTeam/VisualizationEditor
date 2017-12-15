@@ -5,7 +5,7 @@ var dialog=remote.dialog;
 
 function loadFileByPath(filepath){
     var path=filepath.replace(/\\/g,"/");
-    var iconv = require('iconv-lite');  
+    //var iconv = require('iconv-lite');  
     var fs = require('fs');  
     var fileStr = fs.readFileSync(path, {encoding:'binary'}); 
     fs.watchFile(path,function(curr,prev){
