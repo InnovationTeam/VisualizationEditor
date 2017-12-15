@@ -1,24 +1,24 @@
 <template>
-  <div id="editor">
-        <editor-model :content="content" :theme="theme" :lang="lang" :options="options" 
+    <div>
+        <editor-model id="editor" :content="content" :theme="theme" :lang="lang" :options="options" 
              @copy="copy" @paste="paste"> </editor-model>
-             <button @click="test">click</button>
-  </div>
+    </div>
 </template>
 
 <script>
-  import EditorModel from './Editor/EditorModel'
-  import File from '../../api/File'
+import EditorModel from './EditorModel'
 
-  export default {
+export default {
     name: 'editor',
-
+    props: {
+        content: String
+    },
     components: { EditorModel },
-    
-    data () {
+
+    data() {
         return {
             // 设置编辑区组件的属性
-            content: '',
+            // content: '',
             filePath:'',
             lang: 'javascript',
             theme: "monokai",
@@ -62,20 +62,12 @@
             console.log('paste');
         }
     }
-  }
+}
 </script>
 
-
 <style lang="scss" scoped>
-    /* 设置编辑区的样式 */
-    #editor { 
-        // margin: 0;
-        // position: absolute;
-        // top: 50px;
-        // bottom: 0;
-        // left: 0;
-        // right: 0;
-        width: 100%;
-        height: 100%;
-    }
+#editor {
+    width: 100%;
+    height: 100%;
+}
 </style>

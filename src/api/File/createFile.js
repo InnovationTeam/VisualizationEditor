@@ -65,7 +65,7 @@ function createProject()
     var path=projectPath.replace(/\\/g,"/");
 
     createDir(projectPath);
-
+    
     projectPath=projectPath+"/";
     
     var dirname_pages='pages';
