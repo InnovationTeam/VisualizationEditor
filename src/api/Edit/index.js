@@ -1,4 +1,4 @@
-import oopy from './copy'
+import copy from './copy'
 import cut from './cut'
 import find from './find'
 import paste from './paste'

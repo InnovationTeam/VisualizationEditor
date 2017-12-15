@@ -7,6 +7,8 @@
 
 <script>
 import EditorModel from './EditorModel'
+import File from '../../api/File'
+import Edit from '../../api/Edit'
 
 export default {
     name: 'editor',
@@ -40,18 +42,18 @@ export default {
         'content': function(val){
             // console.log(val);
             this.$children[0].editor.setValue(val);
+            //console.log(this.$children[0].editor.getValue())
         }
     },
     mounted() {
         var vm = this;
-
+        vm.$children[0].editor.getSession().on('change',function(e){
+            //可以在这里判断一下自动保存是否被选中
+            File.saveFile(vm,vm.$store.getters['FileControl/getActivePath'])
+        })
+        File.watchFile(vm,vm.$store.getters['FileControl/getActivePath']);
     },
     methods: {
-        test(){
-            var result=File.loadFile();
-            this.content=result.content;
-            this.filePath=result.path;
-        },
         getValue() {
             this.code = this.$children[0].getValue();
         },
