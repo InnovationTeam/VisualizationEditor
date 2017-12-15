@@ -1,4 +1,5 @@
-
+const remote=require("electron").remote
+var dialog=remote.dialog;
 var fs=require("fs");
 
 function createDir(dirpath)
@@ -45,8 +46,12 @@ function createFileByPath(filepath,data='')
     })
 }
 
-function createProject(projectPath) 
+function createProject() 
 {
+
+
+    var projectPath=dialog.showSaveDialog();
+    var path=projectPath.replace(/\\/g,"/");
 
     createDir(projectPath);
 

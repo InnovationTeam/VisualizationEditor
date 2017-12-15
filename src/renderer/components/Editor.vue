@@ -2,11 +2,13 @@
   <div id="editor">
         <editor-model :content="content" :theme="theme" :lang="lang" :options="options" 
              @copy="copy" @paste="paste"> </editor-model>
+             <button @click="test">click</button>
   </div>
 </template>
 
 <script>
   import EditorModel from './Editor/EditorModel'
+  import creat from '../../api/File/createFile'
 
   export default {
     name: 'editor',
@@ -45,6 +47,9 @@
 
     },
     methods: {
+        test(){
+            creat.createProject();
+        },
         getValue() {
             this.code = this.$children[0].getValue();
         },
