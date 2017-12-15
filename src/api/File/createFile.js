@@ -32,6 +32,17 @@ function watchDir(dirpath)
     })
 }
 
+function watchFile(filepath)
+{
+    fs.watchFile(filepath,function(curr,prev){
+        console.log(curr)
+    })
+}
+
+function unwatchFile(filepath)
+{
+    fs.unwatchFile(filepath)
+}
 
 
 function createFileByPath(filepath,data='')
@@ -118,6 +129,8 @@ module.exports = {
     deleteDir,
     renameDir,
     watchDir,
+    watchFile,
+    unwatchFile,
     createFileByPath,
     createProject
 }

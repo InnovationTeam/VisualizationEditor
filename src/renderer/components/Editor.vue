@@ -8,7 +8,7 @@
 
 <script>
   import EditorModel from './Editor/EditorModel'
-  import creat from '../../api/File/createFile'
+  import File from '../../api/File'
 
   export default {
     name: 'editor',
@@ -48,7 +48,9 @@
     },
     methods: {
         test(){
-            creat.createProject();
+            var result=File.loadFile();
+            this.content=result.content;
+            this.filePath=result.path;
         },
         getValue() {
             this.code = this.$children[0].getValue();
