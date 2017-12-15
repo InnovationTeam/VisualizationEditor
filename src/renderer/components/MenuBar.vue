@@ -27,10 +27,10 @@
                 </div>
             </template>
 
-		    <span class="top-right-buttons close"><icon :iconType="'close'" /></span> 
-		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'restore_down'" /></span>
-		    <span class="top-right-buttons maximize" :style="{display: isWindow ? 'block' : 'none'}" @click="isWindow = !isWindow"><icon :iconType="'maximize'" /></span>
-            <span class="top-right-buttons minimize"><icon :iconType="'minimize'" /></span>
+		    <span class="top-right-buttons close" @click="close"><icon :iconType="'close'" /></span> 
+		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="unmaximize"><icon :iconType="'restore_down'" /></span>
+		    <span class="top-right-buttons maximize" :style="{display: isWindow ? 'block' : 'none'}" @click="maximize"><icon :iconType="'maximize'" /></span>
+            <span class="top-right-buttons minimize" @click="minimize"><icon :iconType="'minimize'" /></span>
         </div>
     </div>
 </div>
@@ -42,6 +42,9 @@ import SubMenu from './SubMenu'
 import MenuItem from './MenuItem'
 import Icon from './common/Icon'
 import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
+import * as dialog from '@/../api/Dialog/dialog'
+import Edit from '@/../api/Edit'
+import File from '@/../api/File'
 
 export default {
     data(){
@@ -53,20 +56,29 @@ export default {
 
         let index = 'MENU_FILE'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_PROJECT'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_PROJECT'],  method: File.createProject })
         menu_item.items.push({ name: MENU_TEXT[index + '_NEW_FILE'],     method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_WINDOW'],   method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_WINDOW'],   method: dialog.createWindow })
         menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FILE'],    method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FOLDER'],  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FOLDER'],  method: () => {this.$store.commit('FileControl/OPEN_FOLDER')} })
         menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_RECENT'],  method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE'],         method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_AS'],      method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE'],         method: () => {
+            File.saveFile(
+                this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0], 
+                this.$store.getters['FileControl/getActivePath']
+            )
+        } })
+        menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_AS'],      method: () => {
+            File.saveAs(
+                this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0]
+            )
+        } })
         menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_ALL'],     method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_AUTO_SAVE'],    method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_OPTION'],       method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_EDITOR'], method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_FOLDER'], method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_WINDOW'], method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CLOSE_WINDOW'], method: dialog.close })
         menu_item.items.push({ name: MENU_TEXT[index + '_RELOAD'],       method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_EXIT'],         method: (name) => {alert(name)} })
         menu_texts.push(menu_item)
@@ -77,9 +89,15 @@ export default {
         }
         index = 'MENU_EDIT'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push({ name: MENU_TEXT[index + '_UNDO'],                 method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_REDO'],                 method: (name) => {alert(name)} })
-        menu_item.items.push({ name: MENU_TEXT[index + '_CUT'],                  method: (name) => {alert(name)} })
+        menu_item.items.push({ name: MENU_TEXT[index + '_UNDO'],                 method: () => {
+            Edit.undo(this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0])
+        } })
+        menu_item.items.push({ name: MENU_TEXT[index + '_REDO'],                 method: () => {
+            Edit.redo(this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0])
+        } })
+        menu_item.items.push({ name: MENU_TEXT[index + '_CUT'],                  method: () => {
+            Edit.cut(this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0])
+        } })
         menu_item.items.push({ name: MENU_TEXT[index + '_COPY'],                 method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_PASTE'],                method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_FIND'],                 method: (name) => {alert(name)} })
@@ -163,7 +181,7 @@ export default {
             haveClicked: false,
             showMenu: '',
             isFocus: false,
-            isWindow: false
+            isWindow: true
         }
 
     },
@@ -201,9 +219,21 @@ export default {
             this.isFocus = false
             this.$store.commit('toggleLeftBar')
         },
-        test() {
-            alert('a')
+        close() {
+            dialog.close()
+        },
+        maximize() {
+            this.isWindow = !this.isWindow
+            dialog.maximize()
+        },
+        minimize() {
+            dialog.minimize()
+        },
+        unmaximize() {
+            this.isWindow = !this.isWindow
+            dialog.unmaximize()
         }
+
     },
     mounted() {    
         document.addEventListener('click', (e) => {    

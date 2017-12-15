@@ -13,7 +13,7 @@
                 <component :is="active"></component>
             </keep-alive> -->
             <template v-for="id in openedIDs">
-                <editor v-show="id === active" class="editor" v-bind="{content: getContent(id)}" :key="'editor-' + id"></editor>
+                <editor v-show="id === active" :ref="id" class="editor" v-bind="{content: getContent(id)}" :key="'editor-' + id"></editor>
             </template>
         </div>
     </div>

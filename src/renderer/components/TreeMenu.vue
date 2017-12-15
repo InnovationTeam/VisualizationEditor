@@ -35,13 +35,13 @@ export default {
         openTemporarily() {
             this.$store.commit('FileControl/OPEN_TEMPORARILY', {
                 id: this.currItem.id,
-                path: this.currPath
+                path: this.$store.getters['FileControl/getRootPath'] + this.currPath
             })
         },
         openFile(){
             this.$store.commit('FileControl/OPEN_FILE', {
                 id: this.currItem.id,
-                path: this.currPath
+                path: this.$store.getters['FileControl/getRootPath'] + this.currPath
             })
         }
     },

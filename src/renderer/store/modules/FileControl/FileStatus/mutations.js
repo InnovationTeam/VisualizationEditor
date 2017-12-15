@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {loadFileByPath} from '@/../api/File/loadFile'
 
 export default {
     OPEN_TEMPORARILY(state, { id, path }) {
@@ -6,6 +7,7 @@ export default {
             // 如果文件未被缓存，则去读取文件
             if (state.statuses[id] === undefined) {
                 console.log('use api to open file and get file\'s status, path: ' + path)
+                console.log(loadFileByPath(path))
                 Vue.set(state.statuses, id, {
                     id: id,
                     language: 'JavaScript',
@@ -15,7 +17,8 @@ export default {
                     spaceLength: 4,
                     row: 1,
                     column: 1,
-                    content: id,
+                    content: loadFileByPath(path),
+                    path: path
                 })
             }
 

@@ -3,6 +3,7 @@ export default {
     getActiveFile: (state, getters, rootState) => rootState.FileControl.FileTreeControl.info[state.active],
     getOpenedIDs: state => state.opened,
     getActiveID: state => state.active,
+    getActivePath: (state, getters) => getters.getStatus.path,
     getTempID: state => state.temp,
     getContentByID: state => id => state.statuses[id].content,
 
