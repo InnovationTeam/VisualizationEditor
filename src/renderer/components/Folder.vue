@@ -1,42 +1,53 @@
 <template>
-    <div @click="toggle">
+    <div @click="toggleOpen">
         <span class="folderIcon"><icon :iconType="iconType" /></span>
 
         <span class="folderName">
             <template v-if="!changing">
-                <span @dblclick="changeName">{{ folderName }}</span>
+                <span @click.right="changeName">{{ folderName }}</span>
             </template>
             <template v-else>
-                <input @keyup.enter="notChange" @blur="notChange" v-focus="folderName" v-enter="!changing" v-model="folderName" spellcheck="false">
+                <input @keyup.enter="finishChange" @blur="commitChange" 
+                v-focus="newName" v-enter="!changing" v-model="newName" spellcheck="false">
             </template>
         </span>
     </div>
 </template>
 
 <script>
-import Icon from './Icon'
+import Icon from './common/Icon'
 
 export default {
     props: {
-        folderName: String
+        folderName: String,
+        id: String
     },
     data() {
         return {
             changing: false,
-            opened: false
+            opened: false,
+            newName: this.folderName
         }
     },
     methods: {
-        toggle() {
+        toggleOpen() {
             this.opened = !this.opened
         },
         changeName() {
             this.changing = true
         },
-        notChange() {
+        finishChange() {
             this.changing = false
-            if(this.folderName === '')
-                this.folderName = 'untitled'
+        },
+        commitChange() {
+            this.changing = false
+            if(this.newName === '')
+                this.newName = 'untitled'
+            
+            this.$store.commit('FileControl/CHANGE_NAME', {
+                id: this.id, 
+                newName: this.newName
+            })
         }
     },
     computed:{

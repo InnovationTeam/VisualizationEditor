@@ -11,6 +11,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('../assets/icons/WXVEicon/WXVEicon.css');
+@import url('~@/assets/icons/WXVEicon/WXVEicon.css');
 
 </style>
