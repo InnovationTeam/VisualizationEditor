@@ -2,18 +2,20 @@
     <div id="status-bar">
         <span class="status-item left time">{{ hours }}:{{ minutes }}</span>
         <span class="status-item left shell clickable"><icon :iconType="'shell'" /></span>
-
-        <span class="status-item right clickable">{{ language }}</span>
-        <span class="status-item right clickable">{{ encode }}</span>
-        <span class="status-item right clickable" @click="toggleReturnType">{{ returnType }}</span>
-        <span class="status-item right clickable">{{ spaceInfo }}</span>
-        <span class="status-item right clickable">{{ currCursorPlace }}</span>
+        <template v-if="active !== ''">
+            <span class="status-item right clickable">{{ language }}</span>
+            <span class="status-item right clickable">{{ encode }}</span>
+            <span class="status-item right clickable" @click="toggleReturnType">{{ returnType }}</span>
+            <span class="status-item right clickable">{{ spaceInfo }}</span>
+            <span class="status-item right clickable">{{ currCursorPlace }}</span>
+        </template>
     </div>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
-import Icon from './Icon'
+import Icon from './common/Icon'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapMutations } = createNamespacedHelpers('FileControl')
 
 export default {
     data() {
@@ -27,6 +29,7 @@ export default {
     },
     computed: {
         ...mapGetters({
+            active: 'getActiveID',
             language: 'getLanguage',
             encode: 'getEncode',
             returnType: 'getReturnType',
@@ -38,13 +41,13 @@ export default {
         'icon': Icon
     },
     methods: {
-        ...mapMutations([
-            'changeEncode',
-            'toggleReturnType',
-            'toggleSpaceType',
-            'changeSpanceLength',
-            'updateCurrentCursorPlace'
-        ]),
+        ...mapMutations({
+            changeEncode: 'CHANGE_ENCODE',
+            toggleReturnType: 'TOGGLE_RETURN_TYPE',
+            toggleSpaceType: 'TOGGLE_SPACE_TYPE',
+            changeSpaceLength: 'CHANGE_SPACE_LENGTH',
+            updateCurrentCursorPlace: 'UPDATE_CURRENT_CURSOR_PLACE'
+        }),
         updateDateTime() {
             let date = new Date()
 
