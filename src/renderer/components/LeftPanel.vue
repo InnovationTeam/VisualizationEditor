@@ -20,8 +20,6 @@ import TreeMenu from './TreeMenu'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapMutations } = createNamespacedHelpers('FileControl')
 
-import {mapGetters} from 'vuex'
-
 export default {
     computed: {
         ...mapGetters({
