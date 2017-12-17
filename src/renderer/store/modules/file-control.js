@@ -1,4 +1,4 @@
-import {openCatalog} from '../../../API/catalog.js'
+import {openCatalog} from '../../../api/File/openCatalog.js'
 
 const state = {
     directory: {}

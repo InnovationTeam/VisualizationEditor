@@ -41,7 +41,7 @@
 import SubMenu from './SubMenu'
 import MenuItem from './MenuItem'
 import Icon from './Icon'
-import {close,minimize,maximize,createWindow} from '../../API/electron_api.js'
+import {close,minimize,maximize,createWindow} from '../../api/dialog/dialog.js'
 import MENU_TEXT from '../assets/i18n/chs/menus.i18n.json'
 
 import {mapMutations} from 'vuex'

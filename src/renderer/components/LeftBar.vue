@@ -16,8 +16,8 @@
 <script>
     // 导入字体样式
     import '../assets/icons/iconfont.css'
-    import {openCatalog} from '../../api/catalog.js'
-    import {createNewWindow} from '../../api/electron_api.js'
+    import {openCatalog} from '../../api/File/openCatalog.js'
+    import {createNewWindow} from '../../api/dialog/dialog.js'
 
     export default {
         name: 'left-bar',
