@@ -1,10 +1,13 @@
 
 
-function sum(){
-    var a = arguments[0] ? arguments[0] : 1;   
-    var b = arguments[1] ? arguments[1] : 1; 
-    return a+b;
-}
+let a = 'openFile.js'
+let b = 'createFile.js'
+let c = 'loadFile.js'
+let d = 'saveFile.js'
+let e = 'openCatalog.js'
 
-x = sum(3,4)
-console.log(x)
+let tree = ['openFile.js', 'createFile.js', 'loadFile.js', 'saveFile.js', 'openCatalog.js']
+console.log(tree)
+
+tree.sort()
+console.log(tree)
