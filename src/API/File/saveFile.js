@@ -32,13 +32,9 @@ function saveAs(self)
     fs.writeFile(filepath,content,function(err){
         if(err) throw err;
     });
-<<<<<<< HEAD
-
-=======
 }
 
 module.exports = {
     saveFile: saveFile,
     saveAs
->>>>>>> origin/pre-release
 }
