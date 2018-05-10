@@ -2,7 +2,7 @@
     <div class="button" >
         <button :class="this.classList" :style="this.attr['style']" :disabled="this.disabled">
             <template v-if="this.attr['loading'] === 'true'">
-                <img :class="this.size? 'button-attr-loading-default' : 'button-attr-loading-mini'" src="../../../static/images/loading.gif">
+                <img :class="this.size? 'button-attr-loading-default' : 'button-attr-loading-mini'" src="../../../../static/images/loading.gif">
             </template>
             {{this.children[0].text}}
         </button>
