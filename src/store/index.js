@@ -9,11 +9,21 @@ export default new Vuex.Store({
         FileControl,
     },
     state: {
-        showLeftBar: false
+        showLeftBar: false,
+        useCodeEditor: true,
+        useVisualEditor: false
     },
     mutations: {
       toggleLeftBar(state) {
         state.showLeftBar = !state.showLeftBar
+      },
+      USE_CODE_EDITOR(state) {
+        state.useCodeEditor = true
+        state.useVisualEditor = false
+      },
+      USE_VISUAL_EDITOR(state) {
+        state.useVisualEditor = true
+        state.useCodeEditor = false
       }
     }
 }) 
