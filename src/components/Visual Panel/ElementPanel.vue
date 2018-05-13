@@ -5,9 +5,9 @@
                 v-bind="{elementName: elementName, attributes: elementData.attributes, prebuilts: elementData.prebuilts}"
                 :key="elementName">
                 <template slot="element-preview" slot-scope="{ cfgData }">
-                    <div draggable="true" @dragstart="DragStart($event, elementName, cfgData)">
-                        <component :is="'wx-' + elementName" :cfgData="cfgData"></component>
-                    </div>
+                        <component :is="'wx-' + elementName" :cfgData="cfgData"
+                            draggable="true" @dragstart.native="DragStart($event, elementName, cfgData)">
+                        </component>
                 </template>
             </element-item>
         </template>
@@ -26,11 +26,11 @@ export default {
     },
     methods: {
         DragStart(e, tagName, cfgData) {
+            e.dataTransfer.setData('text', 'addElement')
             e.dataTransfer.setData('application/json', JSON.stringify({
                 tagName: tagName,
                 cfgData: cfgData
             }))
-            console.log(cfgData)
         }
     },
     components: {

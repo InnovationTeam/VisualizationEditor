@@ -4,7 +4,6 @@
             <div :style="{height: scrollContainerHeight + 'px'}"></div>
         </div>
         <div class="phone-content-container" ref="contentContainer"
-            @dragenter="DragEnter($event)" 
             @dragover="DragOver($event)" 
             @drop="Drop($event)" 
             @mousewheel="ScrollContent_mousewheel($event)" 
@@ -40,25 +39,43 @@ export default {
     },
     methods: {
         ...mapMutations({
-            appendChild: 'APPEND_CHILD'
+            appendChild: 'APPEND_CHILD',
+            movingElement: 'MOVING_ELEMENT'
         }),
-        DragEnter(e) {
-            console.log(e.target.dataset.wxElementId)
-        },
         DragOver(e) {
             e.preventDefault()
         },
         Drop(e) {
             e.preventDefault()
-
+            let operation = e.dataTransfer.getData('text')
             let elementData = JSON.parse(e.dataTransfer.getData('application/json'))
+            let targetID = e.target.dataset.wxElementId
+            // console.log(operation)
             // console.log(elementData)
 
-            this.appendChild({
-                id: e.target.dataset.wxElementId,
-                tagName: elementData.tagName,
-                cfgData: elementData.cfgData
-            })
+            if(operation === 'addElement') {
+                this.appendChild({
+                    id: targetID,
+                    tagName: elementData.tagName,
+                    cfgData: elementData.cfgData
+                })
+            }
+            else if(operation === 'moveElement') {
+                let fatherID = elementData.fatherID
+                let movingElementID = elementData.movingElementID
+                console.log('father: ' + fatherID)
+                console.log('target: ' + targetID)
+                console.log('moving: ' + movingElementID)
+
+                if(targetID !== movingElementID) {
+                    this.movingElement({
+                        fatherID: fatherID,
+                        targetID: targetID,
+                        elementID: movingElementID
+                    })
+                }
+            }
+            
 
             this.scrollContainerHeight = this.$refs.content.offsetHeight
         },
