@@ -1,39 +1,11 @@
 <template>
     <div class="phone" @dragenter="DragEnter($event)" @dragover="DragOver($event)" @drop="Drop($event)">
-        <div class="scroll-container" @mousewheel="ScrollContent_mousewheel($event)" ref="scroll">
-            <!-- <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1> -->
-            <div :style="{height: scrollLayerHeight + 'px'}"></div>
+        <div class="scroll-container" ref="scroll" @mousewheel="ScrollContent_mousewheel($event)">
+            <div :style="{height: scrollContainerHeight + 'px'}"></div>
         </div>
-        <div class="phone-content" ref="content">
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
-            <h1>test</h1>
+        <div class="phone-content-container" ref="contentContainer" @mousewheel="ScrollContent_mousewheel($event)">
+            <div class="phone-content" ref="content">
+            </div>
         </div>
         
     </div>
@@ -43,9 +15,17 @@
 export default {
     data() {
         return {
-            scrollLayerHeight: 973
+            scrollContainerHeight: 0,
+            scrollStartY: 0,
         }
     },
+    // computed: {
+    //     scrollContainerHeight() {
+    //         if(this.$refs.content === undefined)
+    //             return 0
+    //         return this.$refs.content.offsetHeight
+    //     }
+    // },
     methods: {
         DragEnter(e) {
             // console.log(e.target)
@@ -58,19 +38,33 @@ export default {
             e.preventDefault()
             // console.log(e.dataTransfer.getData('text/html'))
             // e.target.innerHTML += e.dataTransfer.getData('text/html')
+            this.$refs.content.innerHTML += e.dataTransfer.getData('text/html')
+            console.log(this.$refs.content.offsetHeight)
+            this.scrollContainerHeight = this.$refs.content.offsetHeight
         },
         ScrollContent_mousewheel(e) {
             let dy = e.deltaY / 50
             let total = 0
-            console.log(e);
-            let contentElement = this.$refs
+
+            let contentContainerElement = this.$refs.contentContainer
+            let scrollElement = this.$refs.scroll
+            scrollElement.style.opacity = 1
+            scrollElement.style.transition = 'opacity 0s'
+
             function scroll() {
                 if(Math.abs(total) < Math.abs(e.deltaY)) {
-                    contentElement.content.scrollTop += dy
+                    contentContainerElement.scrollTop += dy
+                    if(e.target !== scrollElement)
+                        scrollElement.scrollTop += dy
                     total += dy
                     setTimeout(scroll, 5)
                 }
+                else {
+                    scrollElement.style.opacity = 0
+                    scrollElement.style.transition = 'opacity .7s'
+                }
             }
+
             scroll()
         }
     }
@@ -81,27 +75,21 @@ export default {
 <style lang="scss" scoped>
 
 .phone {
-    margin: 0 auto;
-    height: 736px;
-    width: 414px;
+    position: relative;
+    height: inherit;
+    width: inherit;
     background-color: white;
     box-shadow: 0px 1px 30px -15px rgba(0,0,0,1);
 
     & > .scroll-container {
         position: absolute;
+        right: 0;
         z-index: 2;
         height: inherit;
-        width: inherit;
+        width: 4px;
         overflow: auto;
-        color: aquamarine;
 
         opacity: 0;
-        transition: opacity .5s;
-
-        &:hover {
-            opacity: 1;
-            transition: opacity 0s;
-        }
 
         &::-webkit-scrollbar-track {
             opacity: 0;
@@ -118,12 +106,23 @@ export default {
         }
     }
 
-    & > .phone-content {
+    & > .phone-content-container {
         position: absolute;
         z-index: 1;
         height: inherit;
         width: inherit;
         overflow: hidden;
+
+        & > .phone-content {
+            width: inherit;
+            height: auto;
+
+            & > div {
+                height: 100px;
+                width: inherit;
+                background-color: aquamarine;
+            }
+        }
     }
 }
 

@@ -3,7 +3,9 @@
         <div class="status-bar">
         </div>
         <div class="phone-box">
-            <phone></phone>
+            <div class="phone">
+                <phone></phone>
+            </div>
         </div>
     </div>
 </template>
@@ -43,7 +45,9 @@ export default {
         align-items: center;
 
         & > .phone {
-            
+            margin: 0 auto;
+            height: 736px;
+            width: 414px;
         }
     }
    

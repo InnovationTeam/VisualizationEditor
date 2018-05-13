@@ -2,7 +2,7 @@
     <div class="wx-button">
         <button :class="classList" :data-plain="cfgData.plain" :data-disabled="cfgData.disabled">
             <template v-if="cfgData.loading">
-                <img src="static/images/loading.gif">
+                <img draggable="false" src="static/images/loading.gif">
             </template>
             {{ cfgData.text }}
         </button>
