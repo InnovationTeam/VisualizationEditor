@@ -33,7 +33,7 @@ function readFile(path,filesList,targetObj)
         if(states.isDirectory())
         {
             var item ;
-            var id = nanoid()
+            var id = nanoid(15)
            
 
             if(targetObj["children"])
@@ -76,6 +76,22 @@ function readFile(path,filesList,targetObj)
             }
         }     
     }
+}
+
+
+function sortingTree(tree,id_name){
+
+    let children = tree.children
+    if(children){
+       for(let i = 0; i < children.length; i++){
+           if(children[i].length == 15)
+                folders.push(children[i])
+       } 
+
+
+    }
+
+
 }
 
 
