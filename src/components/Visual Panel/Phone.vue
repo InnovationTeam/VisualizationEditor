@@ -1,10 +1,20 @@
 <template>
-    <div class="phone" @dragenter="DragEnter($event)" @dragover="DragOver($event)" @drop="Drop($event)">
+    <div class="phone">
         <div class="scroll-container" ref="scroll" @mousewheel="ScrollContent_mousewheel($event)">
             <div :style="{height: scrollContainerHeight + 'px'}"></div>
         </div>
-        <div class="phone-content-container" ref="contentContainer" @mousewheel="ScrollContent_mousewheel($event)">
-            <div class="phone-content" ref="content">
+        <div class="phone-content-container" ref="contentContainer"
+            @dragenter="DragEnter($event)" 
+            @dragover="DragOver($event)" 
+            @drop="Drop($event)" 
+            @mousewheel="ScrollContent_mousewheel($event)" 
+            data-wx-element-id="main">
+            <div class="phone-content" ref="content" data-wx-element-id="main">
+                <template v-if="mainChildrenIDs && mainChildrenIDs.length">
+                    <template v-for="id in mainChildrenIDs">
+                        <element-renderer :childID="id" :key="id"></element-renderer>
+                    </template>
+                </template>
             </div>
         </div>
         
@@ -12,6 +22,10 @@
 </template>
 
 <script>
+import ElementRenderer from './ElementRenderer'
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapMutations } = createNamespacedHelpers('ElementControl')
+
 export default {
     data() {
         return {
@@ -19,32 +33,48 @@ export default {
             scrollStartY: 0,
         }
     },
-    // computed: {
-    //     scrollContainerHeight() {
-    //         if(this.$refs.content === undefined)
-    //             return 0
-    //         return this.$refs.content.offsetHeight
-    //     }
-    // },
+    computed: {
+        ...mapGetters({
+            mainChildrenIDs: 'getMainChildrenIDs'
+        })
+    },
     methods: {
+        ...mapMutations({
+            appendChild: 'APPEND_CHILD'
+        }),
         DragEnter(e) {
-            // console.log(e.target)
+            console.log(e.target.dataset.wxElementId)
         },
         DragOver(e) {
             e.preventDefault()
-            // console.log(e.target)
         },
         Drop(e) {
             e.preventDefault()
-            // console.log(e.dataTransfer.getData('text/html'))
-            // e.target.innerHTML += e.dataTransfer.getData('text/html')
-            this.$refs.content.innerHTML += e.dataTransfer.getData('text/html')
-            console.log(this.$refs.content.offsetHeight)
+
+            let elementData = JSON.parse(e.dataTransfer.getData('application/json'))
+            // console.log(elementData)
+
+            this.appendChild({
+                id: e.target.dataset.wxElementId,
+                tagName: elementData.tagName,
+                cfgData: elementData.cfgData
+            })
+
             this.scrollContainerHeight = this.$refs.content.offsetHeight
         },
         ScrollContent_mousewheel(e) {
             let dy = e.deltaY / 50
             let total = 0
+
+            // this.appendChild({id:'main',tagName:'button',cfgData:{
+            //     size: 0,
+            //     type: 0,
+            //     plain: false,
+            //     disabled: false,
+            //     loading:  false,
+            //     text: "1"
+            // }})
+            // console.log(this.mainChildrenIDs)
 
             let contentContainerElement = this.$refs.contentContainer
             let scrollElement = this.$refs.scroll
@@ -67,6 +97,9 @@ export default {
 
             scroll()
         }
+    },
+    components: {
+        'element-renderer': ElementRenderer
     }
 
 }
@@ -116,12 +149,6 @@ export default {
         & > .phone-content {
             width: inherit;
             height: auto;
-
-            & > div {
-                height: 100px;
-                width: inherit;
-                background-color: aquamarine;
-            }
         }
     }
 }

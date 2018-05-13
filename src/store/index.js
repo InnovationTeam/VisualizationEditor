@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import FileControl from './modules/FileControl'
+import ElementControl from './modules/ElementControl'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         FileControl,
+        ElementControl
     },
     state: {
         showLeftBar: false,

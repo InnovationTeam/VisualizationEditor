@@ -1,10 +1,11 @@
 <template>
-    <div class="wx-button">
-        <button :class="classList" :data-plain="cfgData.plain" :data-disabled="cfgData.disabled">
+    <div class="wx-button" :data-wx-element-id="id">
+        <button :class="classList" :data-plain="cfgData.plain" :data-disabled="cfgData.disabled" :data-wx-element-id="id">
             <template v-if="cfgData.loading">
-                <img draggable="false" src="static/images/loading.gif">
+                <img draggable="false" src="static/images/loading.gif" :data-wx-element-id="id">
             </template>
             {{ cfgData.text }}
+            <slot></slot>
         </button>
     </div>
 </template>
@@ -13,7 +14,10 @@
 import elementAttributeData from './attributes.json'
 export default {
     props: {
-        cfgData: Object
+        cfgData: Object,
+        id: {
+            default: ''
+        }
     },
     data() {
         return {
