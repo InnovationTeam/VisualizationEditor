@@ -74,7 +74,7 @@ $status-bar-height: 25px;
     background: -webkit-linear-gradient(left, #171d33 0%, #171e31 50%, #171d33 100%);
     background: linear-gradient(to right, #171d33 0%, #171e31 50%, #171d33 100%);
     font: {
-        family: 'Consolas';
+        family: 'Consolas', 'Microsoft YaHei';
         size: 14px;
     }
     color: #80849a;

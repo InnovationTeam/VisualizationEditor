@@ -76,7 +76,7 @@ $side-bar-width: 270px;
     text-align: center;
     width: $side-bar-width;
     font: {
-        family: 'Consolas';
+        family: 'Consolas', 'Microsoft YaHei';
         size: 14px;
     }
     color: #80849a;

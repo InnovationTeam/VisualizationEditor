@@ -14,18 +14,25 @@
         </transition>
              
         <div id="menu-bar-buttons">
-            <template v-for="menu in menus">
-                <div :class="['menu-item', showMenu === menu.title ? 'active' : '']" 
-                @click="ClickMenuTitle(menu.title)" @mouseover="OverMenuTitle(menu.title)" 
-                :key="menu.title">
-                    <span>{{ menu.title }}</span>
-                    <sub-menu v-if="showMenu === menu.title">
-                        <template v-for="item in menu.items">
-                            <menu-item @click.native="item.method(item.name)" :key="item.name">{{ item.name }}</menu-item>
-                        </template>
-                    </sub-menu>
-                </div>
-            </template>
+            <div class="menu-bar-options">
+                <template v-for="menu in menus">
+                    <div :class="['menu-item', showMenu === menu.title ? 'active' : '']" 
+                    @click="ClickMenuTitle(menu.title)" @mouseover="OverMenuTitle(menu.title)" 
+                    :key="menu.title">
+                        <span>{{ menu.title }}</span>
+                        <sub-menu v-if="showMenu === menu.title">
+                            <template v-for="item in menu.items">
+                                <menu-item @click.native="item.method(item.name)" :key="item.name">{{ item.name }}</menu-item>
+                            </template>
+                        </sub-menu>
+                    </div>
+                </template>
+            </div>
+
+            <div id="menu-bar-toggle-panel-buttons">
+                <div :class="['toggle-panel-button', useCodeEditor ? 'active' : '']" @click="UseCodeEditor">代码编辑</div>
+                <div :class="['toggle-panel-button', useVisualEditor ? 'active' : '']" @click="UseVisualEditor">组件编辑</div>
+            </div>
 
 		    <span class="top-right-buttons close" @click="close"><icon :iconType="'close'" /></span> 
 		    <span class="top-right-buttons restore_down" :style="{display: !isWindow ? 'block' : 'none'}" @click="unmaximize"><icon :iconType="'restore_down'" /></span>
@@ -188,6 +195,12 @@ export default {
     computed: {
         isOpen() {
             return this.$store.state.showLeftBar
+        },
+        useCodeEditor() {
+            return this.$store.state.useCodeEditor
+        },
+        useVisualEditor() {
+            return this.$store.state.useVisualEditor
         }
     },
     components:{
@@ -218,6 +231,12 @@ export default {
             this.showMenu = ''
             this.isFocus = false
             this.$store.commit('toggleLeftBar')
+        },
+        UseCodeEditor() {
+            this.$store.commit('USE_CODE_EDITOR')
+        },
+        UseVisualEditor() {
+            this.$store.commit('USE_VISUAL_EDITOR')
         },
         close() {
             dialog.close()
@@ -260,7 +279,7 @@ $menu-item-width: 50px;
     background: -webkit-linear-gradient(left, #292d43 0%,#2d364e 50%,#262b41 100%);
     background: linear-gradient(to right, #292d43 0%,#2d364e 50%,#262b41 100%);
     font: {
-        family: 'Consolas';
+        family: 'Consolas', 'Microsoft YaHei';
         size: 14px;
     }
     color: #80849a;
@@ -375,26 +394,97 @@ $nav-icon-span-height: 2px;
     }
 }
 
-.top-right-buttons {
-    float: right;
-    height: inherit;
-    width: $menu-bar-height;
+button {
+     cursor: pointer;
+}
+
+#menu-bar-buttons {
+    position: absolute;
+    z-index: 1;
+
+    height: $menu-bar-height;
     line-height: $menu-bar-height;
-    font-size: 18px;
-    text-align: center;
-    cursor: pointer;
-    &.close:hover {
-        background-color: #e64d4c;
-        color: #d8d8d8;
+    left: 0;
+    right: 0;
+
+    & .menu-bar-options {
+        position: absolute;
+        z-index: 1;
+
+        left: $menu-bar-height;
+        height: inherit;
+        float: left;
+
+        & .menu-item {
+            height: inherit;
+            width: $menu-item-width;
+            line-height: $menu-bar-height;
+
+            float: left;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover, &.active {
+                background-color: #24293a;
+                color: #9295a9;
+            }
+        }
     }
-    &.restore_down:hover,
-    &.maximize:hover {
-        background-color: #1f2433;
-        color: #9295a9;
+
+    & #menu-bar-toggle-panel-buttons {
+        position: absolute;
+        z-index: 0;
+
+        height: inherit;
+        line-height: $menu-bar-height;
+        left: 0;
+        right: 0;
+        text-align: center;
+
+        & .toggle-panel-button {
+            display: inline-block;
+            width: 75px;
+            height: 20px;
+            line-height: 21px;
+            margin-top: 4px;
+            border-radius: 2px;
+            border: 1px solid #9295a9 ;
+            cursor: pointer;
+
+            &.active {
+                background-color: #24293a;
+                color: white;
+            }
+        }
     }
-    &.minimize:hover {
-        background-color: #222738;
-        color: #9295a9;
+
+    & .top-right-buttons {
+        position: relative;
+        z-index: 1;
+
+        height: inherit;
+        width: $menu-bar-height;
+        line-height: $menu-bar-height;
+        font-size: 18px;
+        text-align: center;
+        float: right;
+        cursor: pointer;
+
+        &.close:hover {
+            background-color: #e64d4c;
+            color: #d8d8d8;
+        }
+
+        &.restore_down:hover,
+        &.maximize:hover {
+            background-color: #1f2433;
+            color: #9295a9;
+        }
+
+        &.minimize:hover {
+            background-color: #222738;
+            color: #9295a9;
+        }
     }
 }
 

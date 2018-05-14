@@ -1,0 +1,37 @@
+{
+    "prebuilt-1": {
+        "text": "Hello"
+    },
+    "prebuilt-2": {
+        "size": 1,
+        "type": 2,
+        "text": "Error"
+    },
+    "prebuilt-3": {
+        "size": 1,
+        "type": 0,
+        "plain": true,
+        "text": "Accept"
+    },
+    "prebuilt-4": {
+        "size": 0,
+        "type": 2,
+        "plain": true,
+        "text": "Error"
+    },
+    "prebuilt-5": {
+        "loading": true,
+        "text": "Loading..."
+    },
+    "prebuilt-6": {
+        "type": 0,
+        "disabled": true,
+        "text": "Disabled"
+    },
+    "prebuilt-7": {
+        "size": 1,
+        "type": 0,
+        "plain": true,
+        "text": "Hello"
+    }
+}

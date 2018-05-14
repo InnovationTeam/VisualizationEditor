@@ -48,7 +48,7 @@ export default {
     background: -webkit-linear-gradient(top, #2A3047 0%,#171e32 100%);
     background: linear-gradient(to bottom, #2A3047 0%, #171e32 100%);
     font: {
-        family: 'Consolas';
+        family: 'Consolas', 'Microsoft YaHei';
         size: 14px;
     }
     color: #80849a;

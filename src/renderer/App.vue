@@ -5,12 +5,16 @@
 		</menu-bar>
 
         <side-bar id="side-bar" />
+
 		<left-panel id="left-panel" ref="leftPanel" :style="{width: leftPanelWidth + 'px'}"></left-panel>
+
 		<div class="col-resize" @mousedown="resizePanel_left_editor($event)" 
 			:style="{left: resizeLeft + 'px', width: resizeWidth + 'px'}"></div>
-		<editor-panel id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
-			<!-- <editor id="editor"></editor> -->
-		</editor-panel>
+
+		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
+			<code-editor-panel v-show="showCodeEditorPanel"></code-editor-panel>
+			<visual-editor-panel v-show="showVisualEditorPanel"></visual-editor-panel>
+		</div>
 
 		<status-bar id="status-bar" />		
 	</div>
@@ -21,7 +25,8 @@ import SideBar from './components/SideBar'
 import StatusBar from './components/StatusBar'
 
 import LeftPanel from './components/LeftPanel'
-import EditorPanel from './components/EditorPanel'
+import CodeEditorPanel from './components/EditorPanel'
+import VisualEditorPanel from './components/Visual Panel/VisualEditorPanel'
 // import Editor from './components/Editor'
 
 export default {
@@ -41,6 +46,12 @@ export default {
 		},
 		editorPanelLeft(){
 			return this.leftPanelWidth
+		},
+		showCodeEditorPanel() {
+			return this.$store.state.useCodeEditor
+		},
+		showVisualEditorPanel() {
+			return this.$store.state.useVisualEditor
 		}
 	},
   	components: {
@@ -48,7 +59,8 @@ export default {
 		'side-bar': SideBar,
 		'status-bar': StatusBar,
 		'left-panel': LeftPanel,
-		'editor-panel': EditorPanel
+		'code-editor-panel': CodeEditorPanel,
+		'visual-editor-panel': VisualEditorPanel
 		// 'editor': Editor
   	},
 	methods: {

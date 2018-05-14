@@ -1,0 +1,28 @@
+{
+    "size": {
+        "valueType": "String",
+        "validValue": ["default", "mini"],
+        "defaultValue": 0
+    },
+    "type": {
+        "valueType": "String",
+        "validValue": ["primary", "default", "warn"],
+        "defaultValue": 1
+    },
+    "plain": {
+        "valueType": "Boolean",
+        "defaultValue": false
+    },
+    "disabled": {
+        "valueType": "Boolean",
+        "defaultValue": false
+    },
+    "loading": {
+        "valueType": "Boolean",
+        "defaultValue": false
+    },
+    "text": {
+        "valueType": "Text",
+        "defaultValue": ""
+    }
+}
