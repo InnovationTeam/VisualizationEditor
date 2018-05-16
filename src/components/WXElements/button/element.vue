@@ -10,6 +10,7 @@
 
 <script>
 import elementAttributeData from './attributes.json'
+
 export default {
     props: {
         cfgData: Object,
@@ -28,6 +29,11 @@ export default {
                 'button-type-' + this.attributes.type.validValue[this.cfgData.type],
                 'button-size-' + this.attributes.size.validValue[this.cfgData.size]
             ]
+        }
+    },
+    methods:{
+        creat(){
+
         }
     }
 }
@@ -56,7 +62,7 @@ export default {
             }
         }
         &primary{
-            border: 1px solid #1AAD19;
+            border: 1px solid #286F2B;
             background-color: #1AAD19;
             color: white;
 
@@ -66,7 +72,7 @@ export default {
             }
         }
         &warn{
-            border: 1px solid #E64340;
+            border: 1px solid #841B1C;
             background-color: #E64340;
             color: white;
 

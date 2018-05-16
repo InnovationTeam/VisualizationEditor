@@ -1,0 +1,9 @@
+{
+    "prebuilt-1": {
+        "value": 0,
+        "disabled": true
+    },
+    "prebuilt-2": {
+        "value": 50
+    }
+}

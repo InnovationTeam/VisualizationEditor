@@ -1,0 +1,11 @@
+{
+    "size": {
+        "valueType": "Text",
+        "defaultValue": "23"
+    },
+    "type": {
+        "valueType": "String",
+        "validValue": ["success", "success_no_circle", "info","warn","waiting","cancel","download","clear","search"],
+        "defaultValue": 0
+    }
+}

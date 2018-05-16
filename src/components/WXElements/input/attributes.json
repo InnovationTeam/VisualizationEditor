@@ -1,0 +1,20 @@
+{
+    "type": {
+        "valueType": "String",
+        "validValue": ["text", "number"],
+        "defaultValue": 0
+    },
+    "password":{
+        "valueType": "Boolean",
+        "defaultValue": false
+    },
+    "placeholder": {
+        "valueType": "Text",
+        "defaultValue": ""
+    },
+    "value":{
+        "valueType": "Text",
+        "defaultValue": ""
+    }
+
+}

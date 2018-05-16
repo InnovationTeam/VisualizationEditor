@@ -1,0 +1,18 @@
+{
+    "prebuilt-1": {
+        "type":0
+    },
+    "prebuilt-2": {
+        "type": 1
+    },
+    "prebuilt-5":{
+        "type":1,
+        "password": true
+    },
+    "prebuilt-3": {
+        "placeholder":"testtest"
+    },
+    "prebuilt-4": {
+        "value": "asfd"
+    }
+}

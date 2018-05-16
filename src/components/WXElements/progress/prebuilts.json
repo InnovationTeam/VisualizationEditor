@@ -1,0 +1,15 @@
+{
+    "prebuilt-1": {
+        "percent": "30%"
+    },
+    "prebuilt-2": {
+        "percent": "0%"
+    },
+    "prebuilt-3": {
+        "percent": "100%"
+    },
+    "prebuilt-4": {
+        "percent": "50%",
+        "strokeWidth":"25"
+    }
+}
