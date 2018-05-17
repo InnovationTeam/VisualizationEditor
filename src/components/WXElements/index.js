@@ -8,6 +8,12 @@ import icon from './icon'
 import progress from './progress'
 import video from './video'
 import image from './image'
+import form from './form'
+import label from './label'
+import view from './view'
+import text from './text'
+import navigator from './navigator'
+
 
 export default {
     button,
@@ -19,5 +25,10 @@ export default {
     icon,
     progress,
     video,
-    image
+    image,
+    form,
+    label,
+    view,
+    text,
+    navigator
 }

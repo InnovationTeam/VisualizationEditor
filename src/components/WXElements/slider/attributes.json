@@ -1,22 +1,22 @@
 {
     "value":{
-        "valueType": "Number",
-        "defaultValue": 0
+        "valueType": "Text",
+        "defaultValue": "0"
     },
     "disabled":{
         "valueType": "Boolean",
         "defaultValue": false
     },
     "min":{
-        "valueType": "Number",
-        "defaultValue": 0
+        "valueType": "Text",
+        "defaultValue": "0"
     },
     "max":{
-        "valueType": "Number",
-        "defaultValue": 100
+        "valueType": "Text",
+        "defaultValue": "100"
     },
     "step":{
-        "valueType": "Number",
-        "defaultValue": 0
+        "valueType": "Text",
+        "defaultValue": "0"
     }
 }

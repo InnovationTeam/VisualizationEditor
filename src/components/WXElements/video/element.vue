@@ -37,18 +37,12 @@ export default {
             var newbtn = document.createElement('btn');
             newbtn.innerHTML = '<button class="vjs-control" style="color:#1AAD19;border:1px solid #1AAD19;" id="danmuButton">弹幕</button>';
             var controlBar = document.getElementsByClassName('vjs-control-bar')[0];
-            insertBeforeNode = document.getElementsByClassName('vjs-fullscreen-control')[0];
+            var insertBeforeNode = document.getElementsByClassName('vjs-fullscreen-control')[0];
             controlBar.insertBefore(newbtn,insertBeforeNode);
         })
 
     }
 }
-
-// $(function(){
-    
-
-
-// })
 
 
 

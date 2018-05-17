@@ -1,9 +1,12 @@
 {
     "prebuilt-1": {
-        "value": 0,
-        "disabled": true
+        "value": "0"
     },
     "prebuilt-2": {
-        "value": 50
+        "value": "50"
+    },
+    "prebuilt-3": {
+        "value": "10",
+        "step": "2"
     }
 }
