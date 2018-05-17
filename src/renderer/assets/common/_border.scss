@@ -1,0 +1,5 @@
+@mixin thin_border($color, $positions: ()) {
+    @each $position in $positions {
+        #{'border' + '-' + $position}: 1px solid $color;
+    }
+  }

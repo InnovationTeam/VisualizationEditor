@@ -195,3 +195,23 @@
 .icon-wechat_battery:before {
   content: "\e02c";
 }
+
+.icon-refresh:before {
+  content: "\e02d";
+}
+
+.icon-save:before {
+  content: "\e02e";
+}
+
+.icon-add:before {
+  content: "\e02f";
+}
+
+.icon-trash:before {
+  content: "\e030";
+}
+
+.icon-tick:before {
+  content: "\e031";
+}

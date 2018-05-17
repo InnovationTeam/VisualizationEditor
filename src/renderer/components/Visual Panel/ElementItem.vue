@@ -7,7 +7,7 @@
             <span class="name">{{ elementName }}</span>
         </div>
 
-        <div :class="['element-configuration', isOpen ? 'opened' : 'closed']" ref="test">
+        <div :class="['element-configuration', isOpen ? 'opened' : 'closed']">
             <div class="options-box">
                 <div class="options">
                     <span :class="selectedOption === 1 ? 'selected' : ''" @click="Select(1)">基础</span>

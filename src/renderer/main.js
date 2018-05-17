@@ -4,7 +4,6 @@ import Vue from 'vue'
 
 // 加载并渲染App
 import App from './App'
-import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false

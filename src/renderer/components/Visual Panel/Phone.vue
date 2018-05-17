@@ -32,7 +32,7 @@
             @drop="Drop($event)" 
             @mousewheel="ScrollContent_mousewheel($event)" 
             data-wx-element-id="main">
-            <div class="phone-content" ref="content" data-wx-element-id="main">
+            <div id="phone-content" ref="content" data-wx-element-id="main">
                 <template v-if="mainChildrenIDs && mainChildrenIDs.length">
                     <template v-for="id in mainChildrenIDs">
                         <element-renderer :childID="id" :key="id"></element-renderer>
@@ -233,6 +233,7 @@ $phone-header-height: $phone-header-phone-status-height + $phone-header-wechat-h
         & > .right {
             & span {
                 margin-right: 20px;
+                cursor: pointer;
             }
         }
     }
@@ -279,7 +280,7 @@ $phone-header-height: $phone-header-phone-status-height + $phone-header-wechat-h
         width: inherit;
         overflow: hidden;
 
-        & > .phone-content {
+        & > #phone-content {
             width: inherit;
             height: auto;
         }
