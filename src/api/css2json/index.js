@@ -2,7 +2,10 @@ function css2json(path) {
     var fs = require('fs')
     var css = require('css')
 
-    var code = fs.readFileSync(path)
+    if(!fs.existsSync(path))
+        return []
+
+    var code = fs.readFileSync(path, {encoding: 'utf-8'})
     var str = code.toString()
     var ast = css.parse(str, { source: path })
 
@@ -72,7 +75,9 @@ function save(arr, path) {
     console.log(result)
     var fs = require("fs")
     var npath = require('path')
-    var csspath = npath.dirname(path) + '\\cache' + '\\' + npath.basename(path).split('.')[0] + '.css'
+    // var csspath = npath.dirname(path) + '\\cache' + '\\' + npath.basename(path).split('.')[0] + '.css'
+    // var csspath = npath.dirname(path) + '\\cache' + '\\' + 'cache.css'
+    var csspath = '.\\static\\cache.css'
 
     fs.writeFileSync(path, result)
 

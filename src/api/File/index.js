@@ -6,6 +6,7 @@ import saveFile from './saveFile'
 export default {
     createFileByPath:createFile.createFileByPath,
     createProject:createFile.createProject,
+    copyProject:createFile.copyProject,
     createDir:createFile.createDir,
     deleteDir:createFile.deleteDir,
     renameDir:createFile.renameDir,

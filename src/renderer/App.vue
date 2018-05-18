@@ -12,8 +12,8 @@
 			:style="{left: resizeLeft + 'px', width: resizeWidth + 'px'}"></div>
 
 		<div id="editor-panel" ref="editorPanel" :style="{left: leftPanelWidth + 'px'}">
-			<code-editor-panel v-show="showCodeEditorPanel"></code-editor-panel>
-			<visual-editor-panel v-show="showVisualEditorPanel"></visual-editor-panel>
+			<code-editor-panel v-if="showCodeEditorPanel"></code-editor-panel>
+			<visual-editor-panel v-if="showVisualEditorPanel"></visual-editor-panel>
 		</div>
 
 		<status-bar id="status-bar" />		

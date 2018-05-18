@@ -3,11 +3,12 @@ import {loadFileByPath} from '@/../api/File/loadFile'
 
 export default {
     OPEN_TEMPORARILY(state, { id, path }) {
-        if (state.opened.indexOf(id) === -1) {
+        // if (state.opened.indexOf(id) === -1) {
             // 如果文件未被缓存，则去读取文件
-            if (state.statuses[id] === undefined) {
+            // if (state.statuses[id] === undefined) {
                 console.log('use api to open file and get file\'s status, path: ' + path)
-                console.log(loadFileByPath(path))
+                // if(state.statuses[id] !== undefined)
+                //     state.statuses[id] = {}
                 Vue.set(state.statuses, id, {
                     id: id,
                     language: 'JavaScript',
@@ -20,7 +21,7 @@ export default {
                     content: loadFileByPath(path),
                     path: path
                 })
-            }
+            // }
 
             if (state.temp === '') {
                 state.opened.splice(state.opened.indexOf(state.active) + 1, 0, id)
@@ -28,7 +29,7 @@ export default {
                 state.opened.splice(state.opened.indexOf(state.temp), 1, id)
             }
             state.temp = id
-        }
+        // }
         state.active = id
     },
     OPEN_FILE(state, { id, path }) {

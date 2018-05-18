@@ -1,18 +1,18 @@
 
 
 
-function replace(self,findstr,replacestr)
+function replace(editor,findstr,replacestr)
 {
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
+    // var vm=self.$children[0];//获取当前编辑器指针
+    // var editor = vm.editor
     editor.find(findstr);
     editor.replace(replacestr);
 }
 
-function replaceAll(self,findstr,replacestr)
+function replaceAll(editor,findstr,replacestr)
 {
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
+    // var vm=self.$children[0];//获取当前编辑器指针
+    // var editor = vm.editor
     editor.find(findstr);
     editor.replaceAll(replacestr);
 }

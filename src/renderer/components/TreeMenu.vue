@@ -37,12 +37,19 @@ export default {
                 id: this.currItem.id,
                 path: this.$store.getters['FileControl/getRootPath'] + this.currPath
             })
+            let wxss_path = this.$store.getters['FileControl/getActiveWXSSFilePath']
+            let wxml_path = this.$store.getters['FileControl/getActiveWXMLFilePath']
+            this.$store.commit('ElementControl/PARSE_WXSS_FILE', wxss_path)
+            this.$store.commit('ElementControl/EXPORT_TO_WXSS', {path: wxss_path})
+            this.$store.commit('ElementControl/PARSE_WXML_FILE', wxml_path)
+            
         },
         openFile(){
             this.$store.commit('FileControl/OPEN_FILE', {
                 id: this.currItem.id,
                 path: this.$store.getters['FileControl/getRootPath'] + this.currPath
             })
+            console.log(this.$store.getters['FileControl/getActivePath'])
         }
     },
     computed:{

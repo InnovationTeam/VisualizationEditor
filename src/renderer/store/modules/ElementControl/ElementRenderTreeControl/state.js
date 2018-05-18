@@ -1,4 +1,6 @@
 export default {
     children: [],
-    info: {}
+    info: {},
+    currentFocusElementID: '',
+    currentPageStyle: []
 }

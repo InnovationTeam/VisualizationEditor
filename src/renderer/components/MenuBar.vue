@@ -22,7 +22,7 @@
                         <span>{{ menu.title }}</span>
                         <sub-menu v-if="showMenu === menu.title">
                             <template v-for="item in menu.items">
-                                <menu-item @click.native="item.method(item.name)" :key="item.name">{{ item.name }}</menu-item>
+                                <menu-item @click.native.stop="selectOther(); item.method(item.name)" :key="item.name">{{ item.name }}</menu-item>
                             </template>
                         </sub-menu>
                     </div>
@@ -63,21 +63,38 @@ export default {
 
         let index = 'MENU_FILE'
         menu_item.title = MENU_TEXT[index]
-        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_PROJECT'],  method: File.createProject })
+        menu_item.items.push({ name: MENU_TEXT[index + '_NEW_PROJECT'],  method: () => {
+            let path = File.copyProject() 
+            console.log(path)
+            this.$store.commit('FileControl/OPEN_FOLDER_BY_PATH', {path: path})
+        } })
         menu_item.items.push({ name: MENU_TEXT[index + '_NEW_FILE'],     method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_NEW_WINDOW'],   method: dialog.createWindow })
         menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FILE'],    method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_FOLDER'],  method: () => {this.$store.commit('FileControl/OPEN_FOLDER')} })
         menu_item.items.push({ name: MENU_TEXT[index + '_OPEN_RECENT'],  method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_SAVE'],         method: () => {
-            File.saveFile(
-                this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0], 
-                this.$store.getters['FileControl/getActivePath']
-            )
+            // console.log(this.$parent.$children)
+            // console.log(window.editor.getValue())
+            if(this.$store.state.useCodeEditor){
+                let activePath = this.$store.getters['FileControl/getActivePath']
+                File.saveFile(window.editor, activePath)
+                // if(activePath !== '' && activePath !== undefined) {
+                //     this.$store.commit('FileControl/OPEN_TEMPORARILY', {
+                //         id: this.$store.getters['FileControl/getActiveID'],
+                //         path: activePath
+                //     })
+                // }
+            }
+            else {
+                let wxml_path = this.$store.getters['FileControl/getActiveWXMLFilePath']
+                this.$store.commit('ElementControl/EXPORT_TO_WXML', wxml_path)
+            }
         } })
         menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_AS'],      method: () => {
             File.saveAs(
-                this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0]
+                // this.$parent.$children[2].$refs[this.$store.getters['FileControl/getActiveID']][0]
+                window.editor
             )
         } })
         menu_item.items.push({ name: MENU_TEXT[index + '_SAVE_ALL'],     method: (name) => {alert(name)} })
@@ -97,13 +114,13 @@ export default {
         index = 'MENU_EDIT'
         menu_item.title = MENU_TEXT[index]
         menu_item.items.push({ name: MENU_TEXT[index + '_UNDO'],                 method: () => {
-            Edit.undo(this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0])
+            Edit.undo(window.editor)
         } })
         menu_item.items.push({ name: MENU_TEXT[index + '_REDO'],                 method: () => {
-            Edit.redo(this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0])
+            Edit.redo(window.editor)
         } })
         menu_item.items.push({ name: MENU_TEXT[index + '_CUT'],                  method: () => {
-            Edit.cut(this.$parent.$children[3].$refs[this.$store.getters['FileControl/getActiveID']][0])
+            Edit.cut(window.editor)
         } })
         menu_item.items.push({ name: MENU_TEXT[index + '_COPY'],                 method: (name) => {alert(name)} })
         menu_item.items.push({ name: MENU_TEXT[index + '_PASTE'],                method: (name) => {alert(name)} })
@@ -233,9 +250,36 @@ export default {
             this.$store.commit('toggleLeftBar')
         },
         UseCodeEditor() {
+            let activePath = this.$store.getters['FileControl/getActivePath']
+            if(activePath !== '' && activePath !== undefined) {
+                this.$store.commit('FileControl/OPEN_TEMPORARILY', {
+                    id: this.$store.getters['FileControl/getActiveID'],
+                    path: activePath
+                })
+            }
             this.$store.commit('USE_CODE_EDITOR')
         },
         UseVisualEditor() {
+            let wxss_path = this.$store.getters['FileControl/getActiveWXSSFilePath']
+            let wxml_path = this.$store.getters['FileControl/getActiveWXMLFilePath']
+            if(wxss_path !== '' && wxss_path !== undefined) {
+                this.$store.commit('ElementControl/PARSE_WXSS_FILE', wxss_path)
+                this.$store.commit('ElementControl/EXPORT_TO_WXSS', {path: wxss_path})
+            }
+            if(wxml_path !== '' && wxml_path !== undefined)
+                this.$store.commit('ElementControl/PARSE_WXML_FILE', wxml_path)
+
+            let cssTag = document.getElementById('dynamicCSS');
+            let head = document.getElementsByTagName('head').item(0);
+            if(cssTag) head.removeChild(cssTag);
+            let css = document.createElement('link');
+            css.href = this.$store.getters['FileControl/getActiveWXSSCacheFilePath'];
+            console.log(this.$store.getters['FileControl/getActiveWXSSCacheFilePath'])
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            css.id = 'dynamicCSS';
+            head.appendChild(css);
+            console.log(css)
             this.$store.commit('USE_VISUAL_EDITOR')
         },
         close() {
@@ -251,6 +295,11 @@ export default {
         unmaximize() {
             this.isWindow = !this.isWindow
             dialog.unmaximize()
+        },
+        selectOther() {
+            this.showMenu = ''   
+            this.haveClicked = false
+            this.isFocus = false
         }
 
     },

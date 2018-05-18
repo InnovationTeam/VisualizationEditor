@@ -84,6 +84,11 @@ function openCatalog(){
 
     //由窗口获取
     let path = dialog.showOpenDialog({properties:['openDirectory']})[0]
+    console.log(path)
+    return openCatalogByPath(path)
+}
+
+function openCatalogByPath(path) {
     let seg_path = path.split('\\')
     let name =seg_path[seg_path.length-1]
     //fileList在新的需求中指示起辅助作用，主要需要id_name和root_children
@@ -103,12 +108,13 @@ function openCatalog(){
 }
 
 
-
-
 //这样导出存在bug, 无法识别JSON包,暂未解决
 // module.exports = {
 //     openCatalog: openCatalog
 // }
 
 
-export {openCatalog}
+export {
+    openCatalog,
+    openCatalogByPath
+}

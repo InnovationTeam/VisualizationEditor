@@ -1,0 +1,22 @@
+{
+    "domID":{
+        "valueType": "Text",
+        "defaultValue": ""
+    },
+    "text": {
+        "valueType": "Text",
+        "defaultValue": ""
+    },
+    "value":{
+        "valueType": "Text",
+        "defaultValue": ""
+    },
+    "disabled":{
+        "valueType": "Boolean",
+        "defaultValue": false
+    },
+    "checked":{
+        "valueType": "Boolean",
+        "defaultValue": false
+    }
+}

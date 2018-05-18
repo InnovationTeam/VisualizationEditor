@@ -41,7 +41,7 @@
             // 设置编辑区的主题
             theme: {
                 type: String,
-                default: 'monokai'
+                default: 'github'
             },
             sync: {
                 type: Boolean,
@@ -75,6 +75,9 @@
             // 直接在外部创建编辑区会提示找不到相应的div元素
             // 可能是因为compile template的时候出了问题
             var editor = this.editor = ace.edit(vm.$el);
+
+            window.editor = editor;
+            
             var options = this.options;
 
             //设置编辑区的属性
@@ -86,6 +89,7 @@
             editor.setHighlightActiveLine(true);
             editor.setReadOnly(this.readOnly);
 
+            document.getElementById('editor').style.fontSize='14px';
             //创建事件监听函数
             editor.on('change', function () {
                 // 向父组件传递change事件

@@ -1,10 +1,10 @@
 
 
 
-function redo(self)
+function redo(editor)
 {
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
+    // var vm=self.$children[0];//获取当前编辑器指针
+    // var editor = vm.editor
     editor.redo();
 }
 

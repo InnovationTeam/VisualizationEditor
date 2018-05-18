@@ -2,11 +2,11 @@
     <div class="element-panel scrollable-y">
         <template v-for="(elementData, elementName) in elements">
             <element-item 
-                v-bind="{elementName: elementName, attributes: elementData.attributes, prebuilts: elementData.prebuilts}"
+                v-bind="{elementName: elementName.toLowerCase(), attributes: elementData.attributes, prebuilts: elementData.prebuilts}"
                 :key="elementName">
                 <template slot="element-preview" slot-scope="{ cfgData }">
-                        <component :is="'wx-' + elementName" :cfgData="cfgData"
-                            draggable="true" @dragstart.native="DragStart($event, elementName, cfgData)">
+                        <component :is="'wx-' + elementName.toLowerCase()" :cfgData="cfgData"
+                            draggable="true" @dragstart.native="DragStart($event, elementName.toLowerCase(), cfgData)">
                         </component>
                 </template>
             </element-item>
@@ -46,6 +46,6 @@ export default {
     float: left;
     width: 300px;
     height: inherit;
-    background-color: white;
+    background-color: #f9f9f9;
 }
 </style>

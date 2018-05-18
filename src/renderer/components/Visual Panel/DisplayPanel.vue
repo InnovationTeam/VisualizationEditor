@@ -21,6 +21,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/assets/common/scrollbar';
+@import '~@/assets/common/border';
 
 .display-panel {
     position: relative;
@@ -28,10 +29,12 @@ export default {
     width: 500px;
     height: inherit;
     background-color: #f3f2ee;
+    @include thin_border(#d2d2d2, left);
 
     & > .status-bar {
         height: 30px;
-        background-color: violet;
+        background-color: #f5f5f5;
+        @include thin_border(#d2d2d2, bottom);
     }
 
     & > .phone-box {

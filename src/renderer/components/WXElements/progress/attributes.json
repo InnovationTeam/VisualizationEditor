@@ -1,0 +1,10 @@
+{
+    "percent": {
+        "valueType": "Text",
+        "defaultValue": "0"
+    },
+    "strokeWidth":{
+        "valueType": "Text",
+        "defaultValue": "12"
+    }
+}

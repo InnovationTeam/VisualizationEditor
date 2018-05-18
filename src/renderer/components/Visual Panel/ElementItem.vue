@@ -80,7 +80,11 @@ export default {
         prebuilts: Object
     },
     data() {
-        let cfgData = {}
+        let cfgData = {
+            domClass: [],
+            domID: '',
+            domStyle: {}
+        }
         // 先初始化为默认值，然后使用第一个预设配置设置值
         for(let attrName in this.attributes) {
             cfgData[attrName] = this.attributes[attrName].defaultValue
@@ -118,11 +122,15 @@ export default {
 
             // 如果预设值里没有某个属性，将该属性置为默认值
             for(let attrName in this.cfgData) {
-                if(this.prebuilts[prebuiltName][attrName] === undefined)
+                if(this.prebuilts[prebuiltName][attrName] === undefined && this.attributes[attrName] !== undefined)
                     this.cfgData[attrName] = this.attributes[attrName].defaultValue
                 else
                     this.cfgData[attrName] = this.prebuilts[prebuiltName][attrName]
             }
+
+            this.cfgData.domClass = []
+            this.cfgData.domID = ''
+            this.cfgData.domStyle = {}
         }
     },
     components: {
@@ -134,12 +142,13 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/common/scrollbar';
 @import '~@/assets/common/select';
+@import '~@/assets/common/border';
 
 $element-panel-width: 300px;
 
 $element-name-height: 30px;
-$element-name-color-base: greenyellow;
-$element-name-color-hover: yellow;
+$element-name-color-base: #f5f5f5;
+$element-name-color-hover: darken(#f5f5f5, 5%);
 
 $element-options-box-height: 50px;
 $element-options-width: 250px;
@@ -160,7 +169,7 @@ $element-attribute-value-width: 120px;
 
 $element-configuration-height: 
     $element-options-box-height + $element-preview-window-box-height + $element-option-panel-height + $element-option-panel-margin-top + 10px;
-$element-configuration-color: #e2e2e2;
+$element-configuration-color: #f8fbfd;
 
 
 .element-item {
@@ -171,6 +180,7 @@ $element-configuration-color: #e2e2e2;
         line-height: $element-name-height;
         background-color: $element-name-color-base;
         cursor: pointer;
+        @include thin_border(#d2d2d2, bottom);
 
         &:hover {
             background-color: $element-name-color-hover;

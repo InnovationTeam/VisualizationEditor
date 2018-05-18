@@ -21,7 +21,7 @@ export default {
             // content: '',
             filePath:'',
             lang: 'javascript',
-            theme: "monokai",
+            theme: "github",
             options: {
                 enableBasicAutocompletion: true,
                 enableSnippets: true,

@@ -1,10 +1,10 @@
 
 const remote=require('electron').remote;
 
-function copy(self)
+function copy(editor)
 {
-    var vm=self.$children[0];//获取当前编辑器指针
-    var editor = vm.editor
+    // var vm=self.$children[0];//获取当前编辑器指针
+    // var editor = vm.editor
     var text=editor.getCopyText();
     return text;
 }

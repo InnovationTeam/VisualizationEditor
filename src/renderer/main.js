@@ -6,7 +6,10 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 
+import Hierarchy from "./components/Hierarchy";
+
 Vue.config.productionTip = false
+Vue.use(Hierarchy)
 
 /* eslint-disable no-new */
 new Vue({
